@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+<context:component-scan base-package="kr.co.MIND"></context:component-scan>
+<!-- 객체 생성시 자바는 무조건 생성자를 호출하게 되어있다. -->
+<bean id="myBatis" class="org.mybatis.spring.SqlSessionTemplate">
+	<constructor-arg name="sqlSessionFactory" ref="config"></constructor-arg>
+</bean>
+
+<!-- 1. config xml파일, 2. dbcp설정-->
+<bean id="config" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+	<property name="dataSource" ref="dbcp"></property>
+</bean>
+
+<!-- db연결 설정, 1) driver, 2) url, 3) username, 4) password -->
+<bean id="dbcp" class="org.apache.commons.dbcp.BasicDataSource">
+	<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+	<property name="url" value="jdbc:mysql://localhost:3306/mind"></property>
+	<property name="username" value="MIND"></property>
+	<property name="password" value="mind"></property>
+</bean>
+
+</beans>
