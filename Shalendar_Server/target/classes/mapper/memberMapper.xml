@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mem">
+	<select id="select" parameterType="dto2" resultMap="resMap">
+		select * from user where id = #{id}
+	</select>
+	<select id="selectAll" resultMap="resMap">
+		select * from user
+	</select>
+	<resultMap type="dto2" id="resMap">
+		<result property="id" column="id"/>
+		<result property="pw" column="pw"/>
+		<result property="userName" column="userName"/>
+	</resultMap>
+	
+	<insert id="insert" parameterType="dto2">
+		insert into user values (#{id}, #{pw}, #{userName})
+	</insert>
+	<update id="update" parameterType="dto2">
+		update user set pw = #{pw} where id = #{id}
+	</update>	
+	<delete id="delete" parameterType="dto2">
+		delete from user where pw = #{pw}
+	</delete>
+</mapper>
