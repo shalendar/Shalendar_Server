@@ -20,7 +20,7 @@ public class BbsController {
 		model.addAttribute("list", list);
 	}
 	
-	@RequestMapping("select.do")
+	@RequestMapping("select2.do")
 	public void select(BbsDTO bbsDTO, Model model) {
 		BbsDTO dto = dao.select(bbsDTO);
 		model.addAttribute("dto", dto);

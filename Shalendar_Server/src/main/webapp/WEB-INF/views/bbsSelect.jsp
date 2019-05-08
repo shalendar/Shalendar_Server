@@ -7,17 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>검색 결과</h1>
-	<h1>콘솔창에 정보 나옵니다 확인하세요</h1>
-
-
-
-
-
-
-
-
-
-
+<form action="select.do">
+ ID: <input type="text" name="id"><br>
+<button type="submit">검색 시작</button>
+</form>
 </body>
 </html>

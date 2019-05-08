@@ -14,6 +14,7 @@
 <bean id="config" class="org.mybatis.spring.SqlSessionFactoryBean">
 	<property name="configLocation" value="classpath:mybatis-config.xml"></property>
 	<property name="dataSource" ref="dbcp"></property>
+	
 </bean>
 
 <!-- db연결 설정, 1) driver, 2) url, 3) username, 4) password -->
