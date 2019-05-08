@@ -7,8 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>검색 결과</h1>
-	<h1>콘솔창에 정보 나옵니다 확인하세요</h1>
+	<h1>로그인 되었습니다.</h1>
+	
 
 
 
