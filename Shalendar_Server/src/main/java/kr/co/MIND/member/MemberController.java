@@ -45,15 +45,16 @@ public class MemberController {
 //		System.out.println("pw="+MemberDTO.getPw());
 //		System.out.println("name="+MemberDTO.getUserName());
 //	}
-	
-	@RequestMapping(value="loginCheck.mind",produces="application/json;charset=UTF-8",method=RequestMethod.POST)
+	//로그인 로직
+	@RequestMapping(value="/signin",produces="application/json;charset=UTF-8",method=RequestMethod.POST)
 	public void login(@RequestBody MemberDTO dto,HttpSession session) {
+		JSONObject json = new JSONObject();
 		boolean result = memberService.loginCheck(dto,session);
 		if(result == true) {
-			System.out.println("로그인 성공");
+			json.put("message","login success");
 		}
 		else {
-			System.out.println("로그인 실패");
+			
 		}
 	}
 }
