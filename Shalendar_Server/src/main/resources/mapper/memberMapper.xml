@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
-	<select id="loginCheck" resultType="String">
+	<select id="loginIDCheck" resultType="String">
 		select userName from user
-		where id = #{id} and pw=#{pw}
+		where id = #{id} 
+	</select>
+	<select id="loginPWCheck" resultType="String">
+		select userName from user
+		where pw=#{pw}
 	</select>
 	<select id ="viewMember" resultType="mdto">
 		select userName,id,pw
