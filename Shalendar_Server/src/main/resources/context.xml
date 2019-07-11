@@ -16,7 +16,7 @@
 	<property name="dataSource" ref="dbcp"></property>
 	
 </bean>
-
+	
 <!-- db연결 설정, 1) driver, 2) url, 3) username, 4) password -->
 <bean id="dbcp" class="org.apache.commons.dbcp.BasicDataSource">
 	<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>

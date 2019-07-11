@@ -4,13 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias type="kr.co.MIND.BbsDTO" alias="bdto"></typeAlias>
+		<typeAlias type="kr.co.MIND.calendar.CalendarDTO" alias="cdto"></typeAlias>
 		<typeAlias type="kr.co.MIND.member.MemberDTO" alias="mdto"></typeAlias>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mapper/memberMapper.xml" />
-		<mapper resource="mapper/bbsMapper.xml" />
+		<mapper resource="mapper/calendarMapper.xml" />
+		
 		
 	</mappers>
 </configuration>
