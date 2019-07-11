@@ -1,6 +1,7 @@
 package kr.co.MIND.member;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -14,7 +15,7 @@ public class MemberDAOImpl implements MemberDAO{
 	SqlSessionTemplate	mybatis;
 	
 	@Override
-	public boolean loginCheck(MemberDTO dto, HttpSession session) {
+	public boolean loginCheck(MemberDTO dto, HttpServletResponse response) {
 		String name = mybatis.selectOne("member.loginCheck",dto);	
 		return (name==null)?false:true;
 	}
@@ -25,7 +26,7 @@ public class MemberDAOImpl implements MemberDAO{
 	}
 	
 	@Override
-	public void logout(HttpSession session) {
+	public void logout(HttpServletResponse response) {
 		
 	}
 	@Override
