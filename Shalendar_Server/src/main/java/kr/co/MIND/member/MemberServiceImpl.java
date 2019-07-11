@@ -2,6 +2,7 @@ package kr.co.MIND.member;
 
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 
@@ -14,15 +15,15 @@ public class MemberServiceImpl implements MemberService {
 	@Inject
 	MemberDAO memberDao;
 	
-	//01. È¸¿ø ·Î±×ÀÎ Ã¼Å© 
-	public boolean loginCheck(MemberDTO dto,HttpSession session) {
-		boolean result = memberDao.loginCheck(dto, session);
-		if(result) {
-			MemberDTO dto2 = viewMember(dto);
-			session.setAttribute("id", dto2.getId());
-			session.setAttribute("userName", dto2.getUserName());
+	//01. È¸ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ Ã¼Å© 
+	public boolean loginCheck(MemberDTO dto,HttpServletResponse response) {
+		MemberDTO dto2 = viewMember(dto);
+		if(dto2!=null) {
+			return true;
+		}else {
+			return false;
 		}
-		return result;
+
 	}
 	
 	@Override
