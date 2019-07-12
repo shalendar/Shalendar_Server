@@ -5,6 +5,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 <context:component-scan base-package="kr.co.MIND"></context:component-scan>
+
 <!-- 객체 생성시 자바는 무조건 생성자를 호출하게 되어있다. -->
 <bean id="myBatis" class="org.mybatis.spring.SqlSessionTemplate">
 	<constructor-arg name="sqlSessionFactory" ref="config"></constructor-arg>

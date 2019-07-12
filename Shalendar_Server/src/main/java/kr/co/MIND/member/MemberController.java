@@ -1,6 +1,7 @@
 package kr.co.MIND.member;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
@@ -21,7 +22,7 @@ public class MemberController {
 	MemberService memberService;
 	
 	
-	//È¸¿ø°¡ÀÔ ·ÎÁ÷
+	//È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@ResponseBody
 	@RequestMapping(value="/signup",produces="application/json;charset=UTF-8", method=RequestMethod.POST)
 	public JSONObject joinMember(@RequestBody MemberDTO memberDTO) {
@@ -45,18 +46,30 @@ public class MemberController {
 //		System.out.println("pw="+MemberDTO.getPw());
 //		System.out.println("name="+MemberDTO.getUserName());
 //	}
-	//·Î±×ÀÎ ·ÎÁ÷
+	//ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	@ResponseBody
 	@RequestMapping(value="/signin",produces="application/json;charset=UTF-8",method=RequestMethod.POST)
-	public void login(@RequestBody MemberDTO dto,HttpSession session) {
+	public JSONObject login(@RequestBody MemberDTO dto,HttpServletResponse response) {
 		JSONObject json = new JSONObject();
-		boolean result = memberService.loginCheck(dto,session);
-		if(result == true) {
-			json.put("message","login success");
+		JwtServiceImpl jwt = new JwtServiceImpl();
+		boolean result = memberService.loginCheck(dto,response);
+		if(result) {
+			String token = jwt.create(dto.getId(),dto, "user");
+			System.out.println(token);
+			if(jwt.isUsable(token)) {
+				json.put("message","login success");
+				json.put("token", token);
+				System.out.println(json);
+			}
+			return json;
 		}
 		else {
-			
+			json.put("message", "wrong password");
+			return json;
 		}
 	}
+
+
 }
 
 
