@@ -47,6 +47,7 @@ public class MemberController {
 //		System.out.println("name="+MemberDTO.getUserName());
 //	}
 	//�α��� ����
+	@ResponseBody
 	@RequestMapping(value="/signin",produces="application/json;charset=UTF-8",method=RequestMethod.POST)
 	public JSONObject login(@RequestBody MemberDTO dto,HttpServletResponse response) {
 		JSONObject json = new JSONObject();
@@ -59,7 +60,6 @@ public class MemberController {
 				json.put("message","login success");
 				json.put("token", token);
 				System.out.println(json);
-				return json;
 			}
 			return json;
 		}
