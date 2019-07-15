@@ -17,7 +17,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	//01. ȸ�� �α��� üũ 
 	public boolean loginCheck(MemberDTO dto,HttpServletResponse response) {
-		MemberDTO dto2 = viewMember(dto);
+		MemberDTO dto2 = memberDao.viewMember(dto);
 		if(dto2!=null) {
 			return true;
 		}else {

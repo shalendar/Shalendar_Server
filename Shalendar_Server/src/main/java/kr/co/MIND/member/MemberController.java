@@ -51,6 +51,11 @@ public class MemberController {
 			json.put("message","login success");
 			json.put("token", token);
 			System.out.println(json);
+			if(jwt.isUsable(token)) {
+				json.put("message","login success");
+				json.put("token", token);
+				System.out.println(json);
+			}
 			return json;
 
 
