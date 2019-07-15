@@ -20,15 +20,15 @@ public class MemberController {
 
 	@Inject
 	MemberService memberService;
-	
-	
+
+
 	//ȸ������ ����
 	@ResponseBody
 	@RequestMapping(value="/signup",produces="application/json;charset=UTF-8", method=RequestMethod.POST)
 	public JSONObject joinMember(@RequestBody MemberDTO memberDTO) {
 		JSONObject json = new JSONObject();
 		boolean result = memberService.joinCheck(memberDTO);
-		
+
 		if(result == true) {
 			memberService.joinMember(memberDTO);
 			json.put("message","success");
@@ -37,16 +37,7 @@ public class MemberController {
 		}
 		return json;
 	}
-	
-//	@RequestMapping("select.do")
-//	public void select(MemberDTO MemberDTO, Model model) {
-//		MemberDTO dto = dao.select(MemberDTO);
-//		model.addAttribute("dto", dto);
-//		System.out.println("id="+MemberDTO.getId());
-//		System.out.println("pw="+MemberDTO.getPw());
-//		System.out.println("name="+MemberDTO.getUserName());
-//	}
-	//�α��� ����
+
 	@ResponseBody
 	@RequestMapping(value="/signin",produces="application/json;charset=UTF-8",method=RequestMethod.POST)
 	public JSONObject login(@RequestBody MemberDTO dto,HttpServletResponse response) {
@@ -56,12 +47,20 @@ public class MemberController {
 		if(result) {
 			String token = jwt.create(dto.getId(),dto, "user");
 			System.out.println(token);
+
+			response.setHeader("Authorization", token);
+			json.put("message","login success");
+			json.put("token", token);
+			System.out.println(json);
+
 			if(jwt.isUsable(token)) {
 				json.put("message","login success");
 				json.put("token", token);
 				System.out.println(json);
 			}
 			return json;
+
+
 		}
 		else {
 			json.put("message", "wrong password");
