@@ -1,4 +1,4 @@
-package kr.co.MIND;
+package kr.co.MIND.member;
 
 public class MemberDTO {
 	private String id;

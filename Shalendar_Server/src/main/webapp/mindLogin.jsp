@@ -7,9 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="select.do">
-검색할 ID: <input type="text" name="id"><br>
-<button type="submit">검색 시작</button>
+<form action="loginCheck.mind">
+ ID: <input type="text" name="id"><br>
+ PW: <input type="password" name="pw"><br>
+<button type="submit">로그인</button>
 </form>
 </body>
 </html>
