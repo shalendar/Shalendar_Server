@@ -47,10 +47,17 @@ public class MemberController {
 		if(result) {
 			String token = jwt.create(dto.getId(),dto, "user");
 			System.out.println(token);
+
 			response.setHeader("Authorization", token);
 			json.put("message","login success");
 			json.put("token", token);
 			System.out.println(json);
+
+			if(jwt.isUsable(token)) {
+				json.put("message","login success");
+				json.put("token", token);
+				System.out.println(json);
+			}
 			return json;
 
 

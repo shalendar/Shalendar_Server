@@ -13,21 +13,23 @@ public class CalendarServiceImpl implements CalendarService {
 	@Inject
 	CalendarDAO CalendarDao;
 
+	//공유 달력 생성
 	@Override
 	public void createCalendar(CalendarDTO dto) {
 		CalendarDao.createCalendar(dto);
 		
 	}
 
+	//공유 달력 삭제
 	@Override
 	public void deleteCalendar(CalendarDTO dto) {
-		// TODO Auto-generated method stub
-		
+		CalendarDao.deleteCalendar(dto);
 	}
 
+	//공유 달력 수정
 	@Override
 	public void updateCalendar(CalendarDTO dto) {
-		// TODO Auto-generated method stub
+		CalendarDao.updateCalendar(dto);
 		
 	}
 
