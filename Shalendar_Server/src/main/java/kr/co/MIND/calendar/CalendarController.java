@@ -39,14 +39,25 @@ public class CalendarController {
 		map.put("message", "success");
 		return map;
 	}
-	
+
 	// 공유달력 수정
+	@ResponseBody
+	@RequestMapping(value = "/updateCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+	public Map<String, Object> updateCalendar(@RequestBody CalendarDTO CalendarDTO) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		calendarService.updateCalendar(CalendarDTO);
+		map.put("message", "success");
+		return map;
+	}
+	
+	// 공유달력 조회(cid확인)
 		@ResponseBody
-		@RequestMapping(value = "/updateCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-		public Map<String, Object> updateCalendar(@RequestBody CalendarDTO CalendarDTO) {
+		@RequestMapping(value = "/readCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+		public Map<String, Object> readCalendar(@RequestBody CalendarDTO CalendarDTO) {
 			Map<String, Object> map = new HashMap<String, Object>();
-			calendarService.updateCalendar(CalendarDTO);
+			CalendarDTO result = calendarService.readCalendar(CalendarDTO);
 			map.put("message", "success");
+			map.put("data", result);
 			return map;
 		}
 }

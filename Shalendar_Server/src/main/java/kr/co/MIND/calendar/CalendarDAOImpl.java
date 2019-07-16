@@ -31,10 +31,11 @@ public class CalendarDAOImpl implements CalendarDAO{
 	}
 
 	@Override
-	public CalendarDTO searchCalendar(CalendarDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
+	public CalendarDTO readCalendar(CalendarDTO dto) {
+		return mybatis.selectOne("calendar.readCal",dto);
 	}
+
+
 
 	
 	
