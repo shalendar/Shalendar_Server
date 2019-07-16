@@ -20,7 +20,9 @@
 	</update>
 	
 	<!-- 공유달력 조회 -->
-	
+	<select id="readCal" resultMap="cmap">
+		select cid from calendar where calName=#{calName}
+	</select>
 	
 	<!-- 캘린더 사용자 추가 -->
 	<select id="adduserCal_list">
@@ -32,7 +34,7 @@
 		update calendar set id where cid=#{cid}
 	</update>
 	
-	<resultMap type="cdto" id="map">
+	<resultMap type="cdto" id="cmap">
 		<result property="id" column="id"/>
 		<result property="cid" column="cid"/>
 		<result property="calName" column="calName"/>

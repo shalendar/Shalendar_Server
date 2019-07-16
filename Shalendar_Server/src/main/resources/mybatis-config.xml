@@ -6,12 +6,14 @@
 	<typeAliases>
 		<typeAlias type="kr.co.MIND.calendar.CalendarDTO" alias="cdto"></typeAlias>
 		<typeAlias type="kr.co.MIND.member.MemberDTO" alias="mdto"></typeAlias>
+		<typeAlias type="kr.co.MIND.shareList.ShareListDTO" alias="sharedto"></typeAlias>
 		<typeAlias type="kr.co.MIND.schedule.ScheduleDTO" alias="sdto"></typeAlias>
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mapper/memberMapper.xml" />
 		<mapper resource="mapper/calendarMapper.xml" />
+		<mapper resource="mapper/shareListMapper.xml" />
 		<mapper resource="mapper/scheduleMapper.xml"/>
 		
 		
