@@ -14,13 +14,13 @@
 	</select>
 	
 	<!-- 스케줄 생성 -->
-	
+	<!-- must match cid -->
 	<insert id="createSche" parameterType = "sdto">
-		insert into schedule (title,sContent,startDate,startTime,endDate,endTime,area)
-		values (#{title},#{sContent},#{startDate},#{startTime},#{endDate},#{endTime},#{area})
+		insert into schedule (cid,title,sContent,startDate,startTime,endDate,endTime,area)
+		values (#{cid},#{title},#{sContent},#{startDate},#{startTime},#{endDate},#{endTime},#{area})
 	</insert>
 	<!-- 스케줄 수정 -->
-	<update id="updateSche" parameterType="String">
+	<update id="updateSche" parameterType="sdto">
 		update schedule set
 		title=#{title},sContent=#{sContent},startDate=#{startDate},startTime=#{startTime},
 		endDate=#{endDate},endTime=#{endTime},area=#{area}
@@ -31,7 +31,7 @@
 	</update>
 	
 	<!-- 스케줄 삭제 -->
-	<delete id="deleteSche" parameterType="String">
+	<delete id="deleteSche" parameterType="int">
 		delete from schedule where sid = #{sid}
 		<!-- delete from calendar where calName = #{calName} and
 		id=#{id} -->
