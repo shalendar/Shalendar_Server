@@ -2,7 +2,7 @@ package kr.co.MIND.schedule;
 import javax.inject.Inject;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
-
+import java.util.List;
 
 @Repository
 public class ScheduleDAOImpl implements ScheduleDAO {
@@ -10,6 +10,20 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 	@Inject
 	SqlSessionTemplate	mybatis;
 	
+	@Override
+	public List showAllSchedule(ScheduleDTO dto) {
+		// TODO Auto-generated method stub
+		
+		return mybatis.selectList("schedule.showAllSche",dto.getCid());
+		
+		
+		
+	}
+	@Override
+	public ScheduleDTO showSchedule(String cid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	@Override
 	public void createSchedule(ScheduleDTO dto) {
 		// TODO Auto-generated method stub
@@ -27,5 +41,8 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 		// TODO Auto-generated method stub
 		
 	}
+	
+
+
 
 }

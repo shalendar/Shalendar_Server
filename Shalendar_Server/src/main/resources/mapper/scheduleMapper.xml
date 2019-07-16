@@ -3,15 +3,24 @@
 <mapper namespace="schedule">
 
 	<!-- @@@@@@@@@@@@@@@cid, sid 부여 생각해봐야된다.@@@@@@@@@@@@@@@@@-->
+	<!-- 전체 일정 보내 주기 -->
+	<select id = "showAllSche" parameterType = "String" resultMap = "scheMap">
+		select * from schedule where cid = #{cid}
+	</select>
+	
+	<!-- 상세 일정 보내 주기 --> 
+	<select id = "showSche" parameterType = "String" resultMap = "scheMap">
+		select * from schedule where sid = #{sid}
+	</select>
 	
 	<!-- 스케줄 생성 -->
 	
-	<insert id="createSche">
+	<insert id="createSche" parameterType = "sdto">
 		insert into schedule (title,sContent,startDate,startTime,endDate,endTime,area)
 		values (#{title},#{sContent},#{startDate},#{startTime},#{endDate},#{endTime},#{area})
 	</insert>
 	<!-- 스케줄 수정 -->
-	<update id="updateSche" parameterType="sdto">
+	<update id="updateSche" parameterType="String">
 		update schedule set
 		title=#{title},sContent=#{sContent},startDate=#{startDate},startTime=#{startTime},
 		endDate=#{endDate},endTime=#{endTime},area=#{area}
@@ -28,7 +37,7 @@
 		id=#{id} -->
 	</delete>
 
-	<resultMap type="sdto" id="sche">
+	<resultMap type="sdto" id="scheMap">
 		<result property="cid" column="cid" />
 		<result property="sid" column="sid" />
 		<result property="title" column="title" />
