@@ -11,9 +11,7 @@ public interface CalendarDAO {
 
 	//Ä¶¸°´õ ¼öÁ¤
 	public void updateCalendar(CalendarDTO dto);
-
-	//Ä¶¸°´õ  Á¶È¸
-	public CalendarDTO searchCalendar(CalendarDTO dto);
-
-
+	
+	//Ä¶¸°´õ Á¶È¸
+	public CalendarDTO readCalendar(CalendarDTO dto);
 }

@@ -34,22 +34,8 @@ public class CalendarServiceImpl implements CalendarService {
 	}
 
 	@Override
-	public CalendarDTO searchCalendar(CalendarDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
-		
-	}
-
-	@Override
-	public CalendarDTO viewCalendar(CalendarDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void inviteMember(CalendarDTO dto) {
-		// TODO Auto-generated method stub
-		
+	public CalendarDTO readCalendar(CalendarDTO dto) {
+		return CalendarDao.readCalendar(dto);
 	}
 	
 	

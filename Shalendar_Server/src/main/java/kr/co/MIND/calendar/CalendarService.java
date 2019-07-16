@@ -12,12 +12,6 @@ public interface CalendarService {
 	//캘린더 수정
 	public void updateCalendar(CalendarDTO dto);
 
-	//캘린더 이름으로 조회
-	public CalendarDTO searchCalendar(CalendarDTO dto);
-
-	//캘린더 목록 조회
-	public CalendarDTO viewCalendar(CalendarDTO dto);
-
-	//캘린더 사용자 추가
-	public void inviteMember(CalendarDTO dto);
+	//캘린더 조회 (cid)
+	public CalendarDTO readCalendar(CalendarDTO dto);
 }
