@@ -11,13 +11,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import kr.co.MIND.shareList.*;
 @Controller
 @RequestMapping
 public class CalendarController {
 
 	@Inject
+	ShareListService shareListService;
+	
+	@Inject
 	CalendarService calendarService;
+	
 
 	// 공유달력 생성
 	@ResponseBody
@@ -25,7 +29,16 @@ public class CalendarController {
 	public JSONObject createCalendar(@RequestBody CalendarDTO CalendarDTO) {
 		JSONObject json = new JSONObject();
 		calendarService.createCalendar(CalendarDTO);
+		
+		// ShareList에도 공유달력 생성자가 자동으로 추가되어야 한다.
+		ShareListDTO dto = new ShareListDTO();
+		CalendarDTO result = calendarService.readCalendar(CalendarDTO);
+		System.out.println(result.getCid());
+		dto.setId(result.getId());
+		dto.setCid(result.getCid());
+		shareListService.addUserCal(dto);
 		json.put("message", "success");
+		
 
 		return json;
 	}
