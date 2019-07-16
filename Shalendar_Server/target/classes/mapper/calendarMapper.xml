@@ -21,7 +21,7 @@
 	
 	<!-- 공유달력 조회 -->
 	<select id="readCal" resultMap="cmap">
-		select cid from calendar where calName=#{calName}
+		select id,cid from calendar where calName=#{calName}
 	</select>
 	
 	<!-- 캘린더 사용자 추가 -->
