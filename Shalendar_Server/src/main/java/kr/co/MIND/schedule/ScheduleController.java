@@ -26,12 +26,27 @@ public class ScheduleController {
 		JSONObject json = new JSONObject();
 		List result = scheduleService.showAllSchedule(dto);
 		if(!result.isEmpty()) {
-			json.put("message","success");
 			json.put("data", result);
+			json.put("message","success");
+			
 		}else {
 			json.put("message", "no schedule");
 		}
 		return json;
 	}
-
+	
+	@ResponseBody
+	@RequestMapping(value="/showSche",produces="application/json;charset=UTF-8", method=RequestMethod.POST)
+	public JSONObject showSche(@RequestBody ScheduleDTO dto) {
+		JSONObject json = new JSONObject();
+		ScheduleDTO result = scheduleService.showSchedule(dto);
+		if(result!=null) {
+			json.put("data", result);
+			json.put("message","success");
+			
+		}else {
+			json.put("message", "no schedule");
+		}
+		return json;
+	}
 }

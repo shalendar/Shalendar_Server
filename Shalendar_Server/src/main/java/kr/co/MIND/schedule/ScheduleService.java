@@ -7,5 +7,5 @@ public interface ScheduleService {
 	public void createSchedule(ScheduleDTO dto);
 	public void updateSchedule(ScheduleDTO dto);
 	public void deleteSchedule(ScheduleDTO dto);
-	public ScheduleDTO showSchedule(String cid);
+	public ScheduleDTO showSchedule(ScheduleDTO dto);
 }
