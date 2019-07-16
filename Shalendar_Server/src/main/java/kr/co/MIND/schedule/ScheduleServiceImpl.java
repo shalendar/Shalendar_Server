@@ -20,19 +20,21 @@ public class ScheduleServiceImpl implements ScheduleService{
 	@Override
 	public void createSchedule(ScheduleDTO dto) {
 		// TODO Auto-generated method stub
+		scheduleDao.createSchedule(dto);
 		
 	}
 
 	@Override
 	public void updateSchedule(ScheduleDTO dto) {
 		// TODO Auto-generated method stub
+		scheduleDao.updateSchedule(dto);
 		
 	}
 
 	@Override
 	public void deleteSchedule(ScheduleDTO dto) {
 		// TODO Auto-generated method stub
-		
+		scheduleDao.deleteSchedule(dto);
 	}
 
 	@Override

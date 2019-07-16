@@ -28,18 +28,21 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 	public void createSchedule(ScheduleDTO dto) {
 		// TODO Auto-generated method stub
 		
+		mybatis.selectOne("schedule.createSche", dto);
+		
 	}
 
 	@Override
 	public void updateSchedule(ScheduleDTO dto) {
 		// TODO Auto-generated method stub
+		mybatis.selectOne("schedule.updateSche",dto);
 		
 	}
 
 	@Override
 	public void deleteSchedule(ScheduleDTO dto) {
 		// TODO Auto-generated method stub
-		
+		mybatis.selectOne("schedule.deleteSche",dto);
 	}
 	
 

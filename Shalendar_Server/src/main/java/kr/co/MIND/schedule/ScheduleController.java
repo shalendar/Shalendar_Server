@@ -49,4 +49,47 @@ public class ScheduleController {
 		}
 		return json;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/createSche",produces="application/json;charset=UTF-8", method=RequestMethod.POST)
+	public JSONObject createSche(@RequestBody ScheduleDTO dto) {
+		JSONObject json = new JSONObject();
+		try {
+			scheduleService.createSchedule(dto);
+			json.put("message", "success");
+		}catch(RuntimeException e) {
+			System.out.println(e);
+			json.put("message", "fail");
+		}
+		
+		return json;
+	}
+	@ResponseBody
+	@RequestMapping(value="/deleteSche",produces="application/json;charset=UTF-8", method=RequestMethod.POST)
+	public JSONObject deleteSche(@RequestBody ScheduleDTO dto) {
+		JSONObject json = new JSONObject();
+		try {
+			scheduleService.deleteSchedule(dto);
+			json.put("message", "success");
+		}catch(RuntimeException e) {
+			System.out.println(e);
+			json.put("message", "fail");
+		}
+		
+		return json;
+	}
+	@ResponseBody
+	@RequestMapping(value="/updateSche",produces="application/json;charset=UTF-8", method=RequestMethod.POST)
+	public JSONObject updateSche(@RequestBody ScheduleDTO dto) {
+		JSONObject json = new JSONObject();
+		try {
+			scheduleService.updateSchedule(dto);
+			json.put("message", "success");
+		}catch(RuntimeException e) {
+			System.out.println(e);
+			json.put("message", "fail");
+		}
+		
+		return json;
+	}
 }
