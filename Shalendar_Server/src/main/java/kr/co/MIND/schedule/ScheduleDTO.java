@@ -1,8 +1,8 @@
 package kr.co.MIND.schedule;
 
 public class ScheduleDTO {
-	private String cid;
-	private String sid;
+	private int cid;
+	private int sid;
 	private String title;
 	private String sContent;
 	private String startDate;
@@ -10,16 +10,16 @@ public class ScheduleDTO {
 	private String endDate;
 	private String endTime;
 	private String area;
-	public String getCid() {
+	public int getCid() {
 		return cid;
 	}
-	public void setCid(String cid) {
+	public void setCid(int cid) {
 		this.cid = cid;
 	}
-	public String getSid() {
+	public int getSid() {
 		return sid;
 	}
-	public void setSid(String sid) {
+	public void setSid(int sid) {
 		this.sid = sid;
 	}
 	public String getTitle() {
