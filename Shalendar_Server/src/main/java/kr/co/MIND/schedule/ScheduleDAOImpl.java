@@ -20,9 +20,9 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 		
 	}
 	@Override
-	public ScheduleDTO showSchedule(String cid) {
+	public ScheduleDTO showSchedule(ScheduleDTO dto) {
 		// TODO Auto-generated method stub
-		return null;
+		return mybatis.selectOne("schedule.showSche",dto.getSid());
 	}
 	@Override
 	public void createSchedule(ScheduleDTO dto) {
