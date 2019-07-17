@@ -22,7 +22,7 @@ public class CalendarDAOImpl implements CalendarDAO{
 	//공유 달력 삭제
 	@Override
 	public void deleteCalendar(CalendarDTO dto) {
-		mybatis.delete("calendar.deleteCal", dto.getCalName());
+		mybatis.delete("calendar.deleteCal", dto);
 	}
 
 	//공유 달력 수정
