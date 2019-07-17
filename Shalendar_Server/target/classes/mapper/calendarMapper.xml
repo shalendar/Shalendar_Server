@@ -10,13 +10,13 @@
 	<!-- 공유달력 삭제 -->
 	<!-- 삭제할 달력의 이름과 달력 생성시 만든 사용자의 id를 같이 보내야 한다 -->
 	<delete id="deleteCal" parameterType="String">
-		delete from calendar where calName = #{calName} and id=#{id}
+		delete from calendar where id=#{id} and cid=#{cid}
 	</delete>
 	
 	<!-- 공유달력 수정 -->
 	<!-- 바꿀 달력의 이름, 변경할 정보랑 달력을 생성한 사용자 정보를 같이 보내줘야한다 -->
 	<update id="updateCal" parameterType="cdto">
-		update calendar set calName=#{updateCalName},calContent=#{calContent},img_url=#{img_url} where id=#{id} and calName=#{calName}
+		update calendar set calName=#{calName},calContent=#{calContent},img_url=#{img_url} where id=#{id} and cid=#{cid}
 	</update>
 	
 	<!-- 공유달력 조회 -->
