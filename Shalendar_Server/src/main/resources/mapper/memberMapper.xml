@@ -2,6 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
 
+	<!-- img_url 변경-->
+	<update id="updateImg_url" parameterType = "mdto">
+		update user set img_url = #{img_url} where id = #{id}
+	</update>
+	
 	<!-- 캘린더 사용자 추가 -->
 	<select id ="addUser_Calendar" resultType="String">
 		select userName
@@ -33,10 +38,11 @@
 		<result property="id" column="id"/>
 		<result property="pw" column="pw"/>
 		<result property="userName" column="userName"/>
+		<result property="img_url" column="img_url"/>
 	</resultMap>
 	
 	<insert id="joinMember">
-		insert into user values (#{id}, #{pw}, #{userName})
+		insert into user values (#{id}, #{pw}, #{userName},#{img_url})
 	</insert>
 	<select id="joinCheck" resultType="String">
 		select * from user where id = #{id}
