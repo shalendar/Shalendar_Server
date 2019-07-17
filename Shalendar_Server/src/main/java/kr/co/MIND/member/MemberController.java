@@ -22,7 +22,8 @@ public class MemberController {
 	@Inject
 	MemberService memberService;
 
-
+	@Inject
+	JwtService jwt;
 	//ȸ������ ����
 	@ResponseBody
 	@RequestMapping(value="/signup",produces="application/json;charset=UTF-8", method=RequestMethod.POST)
@@ -43,10 +44,9 @@ public class MemberController {
 	@RequestMapping(value="/signin",produces="application/json;charset=UTF-8",method=RequestMethod.POST)
 	public JSONObject login(@RequestBody MemberDTO dto,HttpServletResponse response) {
 		JSONObject json = new JSONObject();
-		JwtServiceImpl jwt = new JwtServiceImpl();
 		boolean result = memberService.loginCheck(dto,response);
 		if(result) {
-//			String token = jwt.create(dto.getId(),dto, "user");
+
 			String token = jwt.create("userID",dto, "User");
 			System.out.println(token);
 			response.setHeader("Authorization", token);
@@ -74,7 +74,8 @@ public class MemberController {
 	public JSONObject imageChange(@RequestBody MemberDTO dto) {
 		JSONObject json = new JSONObject();
 		try {
-		
+			String id = jwt.getUserID();
+			dto.setId(id);
 			memberService.imageChange(dto);
 			json.put("message", "image change success");
 		}catch(RuntimeException e) {

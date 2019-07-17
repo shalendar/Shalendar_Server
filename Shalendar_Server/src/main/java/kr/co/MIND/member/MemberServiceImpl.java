@@ -51,10 +51,6 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void imageChange(MemberDTO dto) {
 		// TODO Auto-generated method stub
-		JwtServiceImpl jwt = new JwtServiceImpl();
-		String id = jwt.getUserID();
-		System.out.println(id);
-		dto.setId(id);
 		memberDao.imgChange(dto);
 	}
 	
