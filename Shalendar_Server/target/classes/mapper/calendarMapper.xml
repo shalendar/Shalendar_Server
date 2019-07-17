@@ -24,15 +24,11 @@
 		select id,cid from calendar where calName=#{calName}
 	</select>
 	
-	<!-- 캘린더 사용자 추가 -->
-	<select id="adduserCal_list">
-		select id from calendar where cid=#{cid}
+	<!-- 공유달력 전체 조회 -->
+	<select id="readAllCal" resultMap="cmap">
+		select * from calendar where cid=#{cid}
 	</select>
 	
-	<!-- select하고 id변수에 추가하여 다시 update하여 저장 -->
-	<update id="addUserCal">
-		update calendar set id where cid=#{cid}
-	</update>
 	
 	<resultMap type="cdto" id="cmap">
 		<result property="id" column="id"/>

@@ -1,5 +1,7 @@
 package kr.co.MIND.calendar;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -33,6 +35,11 @@ public class CalendarDAOImpl implements CalendarDAO{
 	@Override
 	public CalendarDTO readCalendar(CalendarDTO dto) {
 		return mybatis.selectOne("calendar.readCal",dto);
+	}
+
+	@Override
+	public CalendarDTO readAllCalendar(CalendarDTO dto) {
+		return mybatis.selectOne("calendar.readAllCal",dto);
 	}
 
 

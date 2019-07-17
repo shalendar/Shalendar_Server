@@ -7,6 +7,11 @@
 		select id from shareList where cid=#{cid}
 	</select>
 	
+	<!-- 하나의 캘린더를 사용하는 사용자들 조회 -->
+	<select id="readUserAllCal" resultMap="smap">
+		select cid from shareList where id=#{id}
+	</select>
+	
 	<!-- 캘린더 사용자 추가 -->
 	<insert id="addUserCal" >
 		insert into shareList (cid,id) values (#{cid},#{id})

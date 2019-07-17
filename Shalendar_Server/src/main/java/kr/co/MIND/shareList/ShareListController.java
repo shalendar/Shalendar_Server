@@ -21,6 +21,8 @@ public class ShareListController {
 	ShareListService shareListService;
 
 	// 캘린더 사용자 추가
+	// cid에 있는 shareList.id들 중에서
+	// 캘린더에 초대된 사람들만 만 추가 가능 (token.id == shareList.id)
 	@ResponseBody
 	@RequestMapping(value = "/addUserCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
 	public Map<String, Object> addUserCal(@RequestBody ShareListDTO ShareListDTO) {
@@ -30,7 +32,7 @@ public class ShareListController {
 		return map;
 	}
 
-	// 캘린더 사용자 조회
+	// 캘린더를 사용하고 있는 사용자들을 조회
 	@ResponseBody
 	@RequestMapping(value = "/readUserCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
 	public Map<String, Object> readUserCal(@RequestBody ShareListDTO ShareListDTO) {
