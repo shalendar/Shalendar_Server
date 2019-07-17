@@ -4,6 +4,7 @@ public class MemberDTO {
 	private String id;
 	private String pw;
 	private String userName;
+	private String img_url;
 	
 	
 	public String getId() {
@@ -24,7 +25,13 @@ public class MemberDTO {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	
+	public String getImg_url() {
+		return img_url;
+	}
+	public void setImg_url(String img_url) {
+		this.img_url = img_url;
+	}
+
 	
 
 	

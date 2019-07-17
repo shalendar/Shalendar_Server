@@ -1,7 +1,7 @@
 package kr.co.MIND.member;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 
 import kr.co.MIND.member.MemberDTO;
 
@@ -11,5 +11,6 @@ public interface MemberDAO {
 	public void logout(HttpServletResponse response);
 	public void joinMember(MemberDTO dto);
 	public boolean joinCheck(MemberDTO dto);
+	public void imgChange(MemberDTO dto);
 	
 }

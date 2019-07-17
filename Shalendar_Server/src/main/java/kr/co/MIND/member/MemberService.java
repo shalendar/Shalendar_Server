@@ -11,4 +11,5 @@ public interface MemberService {
 	public void logout(HttpSession session);
 	public void joinMember(MemberDTO dto);
 	public boolean joinCheck(MemberDTO dto);
+	public void imageChange(MemberDTO dto);
 }

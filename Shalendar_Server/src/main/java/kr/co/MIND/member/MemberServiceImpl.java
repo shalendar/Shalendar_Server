@@ -1,6 +1,8 @@
 package kr.co.MIND.member;
 
 
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -44,6 +46,16 @@ public class MemberServiceImpl implements MemberService {
 	public boolean joinCheck(MemberDTO dto) {
 		return memberDao.joinCheck(dto);
 		
+	}
+
+	@Override
+	public void imageChange(MemberDTO dto) {
+		// TODO Auto-generated method stub
+		JwtServiceImpl jwt = new JwtServiceImpl();
+		String id = jwt.getUserID();
+		System.out.println(id);
+		dto.setId(id);
+		memberDao.imgChange(dto);
 	}
 	
 }

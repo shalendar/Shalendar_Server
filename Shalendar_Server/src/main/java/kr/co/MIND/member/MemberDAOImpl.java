@@ -42,4 +42,11 @@ public class MemberDAOImpl implements MemberDAO{
 //		return myBatis.selectOne("mem.select", dto);
 //		
 //	}
+
+	@Override
+	public void imgChange(MemberDTO dto) {
+		// TODO Auto-generated method stub
+		mybatis.selectOne("member.updateImg_url",dto);
+		
+	}
 }
