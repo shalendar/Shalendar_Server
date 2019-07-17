@@ -21,7 +21,7 @@
 	
 	<!-- 공유달력 조회 -->
 	<select id="readCal" resultMap="cmap">
-		select id,cid from calendar where calName=#{calName}
+		select id,cid from calendar where calName=#{calName} and calContent=#{calContent} and img_url=#{img_url}
 	</select>
 	
 	<!-- 공유달력 전체 조회 -->

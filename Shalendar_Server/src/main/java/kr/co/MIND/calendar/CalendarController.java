@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.MIND.member.JwtService;
+import kr.co.MIND.member.MemberDTO;
+import kr.co.MIND.member.MemberService;
 import kr.co.MIND.shareList.*;
 
 @Controller
@@ -25,6 +27,9 @@ public class CalendarController {
 
 	@Inject
 	CalendarService calendarService;
+	
+	@Inject
+	MemberService memberService;
 
 	@Inject
 	JwtService jwtService;
@@ -37,7 +42,7 @@ public class CalendarController {
 		try {
 			CalendarDTO.setId(jwtService.getUserID());
 			calendarService.createCalendar(CalendarDTO);
-
+			
 			// ShareList에도 공유달력 생성자가 자동으로 추가되어야 한다.
 			ShareListDTO dto = new ShareListDTO();
 			CalendarDTO result = calendarService.readCalendar(CalendarDTO);
@@ -89,6 +94,7 @@ public class CalendarController {
 	
 	// 공유달력 조회(사이드바 달력들 보여주기)
 	// 해당 사용자가 가지고 있는 달력들 조회 (cid,calName,img_url,사용자들)
+	// 사용자들 정보도 보내줄 것
 	@ResponseBody
 	@RequestMapping(value = "/readAllCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
 	public Map<String, Object> readAllCalendar(@RequestBody CalendarDTO CalendarDTO) {
@@ -97,17 +103,22 @@ public class CalendarController {
 			ShareListDTO dto = new ShareListDTO();
 			dto.setId(jwtService.getUserID());
 			List<ShareListDTO> resultCid = shareListService.readUserAllCal(dto); 
+			List<List<MemberDTO>> profile = new ArrayList<List<MemberDTO>>();
 			List<CalendarDTO> result = new ArrayList<CalendarDTO>();
+//			List<MemberDTO> profile = new ArrayList<MemberDTO>();
 			CalendarDTO temp = new CalendarDTO();
+			MemberDTO mTemp = new MemberDTO();
 			int i=0;
 			for(ShareListDTO object:resultCid) {
-				System.out.println(i++);
 				temp.setCid(object.getCid());
+				mTemp.setId(object.getId());
 				result.add(calendarService.readAllCalendar(temp));
-//				System.out.println(result);
+				profile.add(memberService.readMemCal(object));
 			}
+//			profile.add(memberService.profile(dto))
 			if(!result.isEmpty()) {
 				map.put("data", result);
+				map.put("data2", profile);
 				map.put("message", "success");
 			}else {
 				map.put("message", "fail");

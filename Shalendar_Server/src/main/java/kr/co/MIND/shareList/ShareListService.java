@@ -15,4 +15,8 @@ public interface ShareListService {
 		public List<ShareListDTO> readUserAllCal(ShareListDTO dto);
 		
 		
+		
+		public ShareListDTO userCheck(ShareListDTO dto);
+		
+		
 }
