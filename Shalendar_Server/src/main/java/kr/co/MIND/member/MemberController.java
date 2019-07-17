@@ -71,7 +71,7 @@ public class MemberController {
 
 	@ResponseBody
 	@RequestMapping(value="/imageChange",produces="application/json;charset=UTF-8", method=RequestMethod.POST)
-	public JSONObject imageChange(@RequestHeader String Authorization,@RequestBody MemberDTO dto) {
+	public JSONObject imageChange(@RequestBody MemberDTO dto) {
 		JSONObject json = new JSONObject();
 		try {
 		
