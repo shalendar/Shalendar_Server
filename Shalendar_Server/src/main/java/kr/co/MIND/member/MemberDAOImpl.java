@@ -49,4 +49,9 @@ public class MemberDAOImpl implements MemberDAO{
 		mybatis.selectOne("member.updateImg_url",dto);
 		
 	}
+
+	@Override
+	public MemberDTO profile(MemberDTO dto) {
+		return mybatis.selectOne("member.select",dto);
+	}
 }

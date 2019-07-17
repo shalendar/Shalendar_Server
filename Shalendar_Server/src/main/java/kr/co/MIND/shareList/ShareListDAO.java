@@ -12,4 +12,6 @@ public interface ShareListDAO {
 	// 하나의 캘린더 사용자들 조회(id값 확인)
 	public List<ShareListDTO> readUserAllCal(ShareListDTO dto);
 	
+	public ShareListDTO userCheck(ShareListDTO dto);
+	
 }

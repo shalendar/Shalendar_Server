@@ -13,4 +13,6 @@ public interface MemberDAO {
 	public boolean joinCheck(MemberDTO dto);
 	public void imgChange(MemberDTO dto);
 	
+	public MemberDTO profile(MemberDTO dto);
+	
 }

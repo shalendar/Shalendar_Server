@@ -32,6 +32,11 @@ public class ShareListDAOImpl implements ShareListDAO{
 		return result;
 	}
 
+	@Override
+	public ShareListDTO userCheck(ShareListDTO dto) {
+		return mybatis.selectOne("shareList.userCheck", dto);
+	}
+
 
 	
 	
