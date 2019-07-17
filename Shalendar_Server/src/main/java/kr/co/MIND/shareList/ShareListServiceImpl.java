@@ -26,6 +26,11 @@ public class ShareListServiceImpl implements ShareListService {
 		shareListDao.addUserCal(dto);
 		
 	}
+
+	@Override
+	public List<ShareListDTO> readUserAllCal(ShareListDTO dto) {
+		return shareListDao.readUserAllCal(dto);
+	}
 	
 	
 	

@@ -71,7 +71,7 @@ public class JwtServiceImpl implements JwtService{
 		Map<String, Object> value = (LinkedHashMap<String, Object>)claims.getBody().get(key);
 		return value;
 	}
-
+	
 	@Override
 	public String getUserID() {
 		// TODO Auto-generated method stub

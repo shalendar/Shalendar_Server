@@ -1,6 +1,8 @@
 package kr.co.MIND.calendar;
 
 
+import java.util.List;
+
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +38,11 @@ public class CalendarServiceImpl implements CalendarService {
 	@Override
 	public CalendarDTO readCalendar(CalendarDTO dto) {
 		return CalendarDao.readCalendar(dto);
+	}
+
+	@Override
+	public CalendarDTO readAllCalendar(CalendarDTO dto) {
+		return CalendarDao.readAllCalendar(dto);
 	}
 	
 	
