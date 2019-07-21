@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="schedule">
-<<<<<<< HEAD
 	
 	<!-- 일정 검색  -->
-	<select id="searchSche" parameterType = "String" resultMap = "scheMap">
-		select *from schedule where title like #{title}
+	<select id="searchSche" parameterType = "sdto" resultMap = "scheMap">
+		select * from schedule where id=#{id} and title like '%'||#{title}||'%'
 	</select>
-=======
->>>>>>> d67c8ae6fa4b27704905f103f04ecb1648251f59
 
 	<!-- @@@@@@@@@@@@@@@cid, sid 부여 생각해봐야된다.@@@@@@@@@@@@@@@@@-->
 	<!-- 전체 일정 보내 주기 -->
@@ -24,8 +21,8 @@
 	<!-- 스케줄 생성 -->
 	<!-- must match cid -->
 	<insert id="createSche" parameterType = "sdto">
-		insert into schedule (cid,title,sContent,startDate,startTime,endDate,endTime,area)
-		values (#{cid},#{title},#{sContent},#{startDate},#{startTime},#{endDate},#{endTime},#{area})
+		insert into schedule (cid,title,sContent,startDate,startTime,endDate,endTime,area,id)
+		values (#{cid},#{title},#{sContent},#{startDate},#{startTime},#{endDate},#{endTime},#{area},#{id})
 	</insert>
 	<!-- 스케줄 수정 -->
 	<update id="updateSche" parameterType="sdto">
@@ -46,6 +43,7 @@
 	</delete>
 
 	<resultMap type="sdto" id="scheMap">
+		<result property="id" column="id" />
 		<result property="cid" column="cid" />
 		<result property="sid" column="sid" />
 		<result property="title" column="title" />
