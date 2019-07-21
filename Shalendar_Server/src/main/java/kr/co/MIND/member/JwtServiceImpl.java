@@ -72,4 +72,10 @@ public class JwtServiceImpl implements JwtService{
 		return value;
 	}
 	
+	@Override
+	public String getUserID() {
+		// TODO Auto-generated method stub
+		return (String)this.get("userID").get("id");
+	}
+	
 }

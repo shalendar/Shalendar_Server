@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+	<!-- 댓글 생성  -->
+	<insert id="createComments">
+		insert into board (id,cid,sid,comments) values (#{id},#{cid},#{sid},#{comments})
+	</insert>
+
+	<!-- 댓글 삭제 -->
+	<delete id="deleteComments" parameterType="bdto">
+		delete from board where id=#{id} and sid=#{sid} and cid=#{cid} and commentNum=#{commentNum}
+	</delete>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateComments" parameterType="bdto">
+		update board set comments=#{comments} where id=#{id} and cid=#{cid} and sid=#{sid} and commentNum=#{commentNum}
+	</update>
+	
+	<!-- 댓글 조회 -->
+	<select id="commentCheck" resultMap="bmap">
+		select * from board where commentNum=#{commentNum} 
+	</select>
+		
+	<!-- 댓글 전체 조회 -->
+	<select id="readAllComments" resultMap="bmap">
+		select * from board where cid=#{cid} and sid=#{sid} 
+	</select>
+	
+	<resultMap type="bdto" id="bmap">
+		<result property="id" column="id"/>
+		<result property="cid" column="cid"/>
+		<result property="sid" column="sid"/>
+		<result property="comments" column="comments"/>
+		<result property="rdate" column="rdate"/>
+	</resultMap>
+</mapper>

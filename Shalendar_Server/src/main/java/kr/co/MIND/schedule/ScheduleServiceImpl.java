@@ -43,4 +43,10 @@ public class ScheduleServiceImpl implements ScheduleService{
 		return scheduleDao.showSchedule(dto);
 	}
 
+	@Override
+	public List searchSchedule(ScheduleDTO dto) {
+		// TODO Auto-generated method stub
+		return scheduleDao.searchSchedule(dto);
+	}
+
 }

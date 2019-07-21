@@ -7,4 +7,5 @@ public interface JwtService {
 	public byte[] generateKey();
 	boolean isUsable(String jwt);
 	public Map<String, Object> get(String key);
+	public String getUserID();
 }

@@ -1,5 +1,7 @@
 package kr.co.MIND.calendar;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -20,7 +22,7 @@ public class CalendarDAOImpl implements CalendarDAO{
 	//공유 달력 삭제
 	@Override
 	public void deleteCalendar(CalendarDTO dto) {
-		mybatis.delete("calendar.deleteCal", dto.getCalName());
+		mybatis.delete("calendar.deleteCal", dto);
 	}
 
 	//공유 달력 수정
@@ -33,6 +35,11 @@ public class CalendarDAOImpl implements CalendarDAO{
 	@Override
 	public CalendarDTO readCalendar(CalendarDTO dto) {
 		return mybatis.selectOne("calendar.readCal",dto);
+	}
+
+	@Override
+	public CalendarDTO readAllCalendar(CalendarDTO dto) {
+		return mybatis.selectOne("calendar.readAllCal",dto);
 	}
 
 

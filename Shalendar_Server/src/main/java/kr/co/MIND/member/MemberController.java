@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,7 +22,8 @@ public class MemberController {
 	@Inject
 	MemberService memberService;
 
-
+	@Inject
+	JwtService jwt;
 	//ȸ������ ����
 	@ResponseBody
 	@RequestMapping(value="/signup",produces="application/json;charset=UTF-8", method=RequestMethod.POST)
@@ -42,10 +44,10 @@ public class MemberController {
 	@RequestMapping(value="/signin",produces="application/json;charset=UTF-8",method=RequestMethod.POST)
 	public JSONObject login(@RequestBody MemberDTO dto,HttpServletResponse response) {
 		JSONObject json = new JSONObject();
-		JwtServiceImpl jwt = new JwtServiceImpl();
 		boolean result = memberService.loginCheck(dto,response);
 		if(result) {
-			String token = jwt.create(dto.getId(),dto, "user");
+
+			String token = jwt.create("userID",dto, "User");
 			System.out.println(token);
 			response.setHeader("Authorization", token);
 			json.put("message","login success");
@@ -67,7 +69,23 @@ public class MemberController {
 		}
 	}
 
+	@ResponseBody
+	@RequestMapping(value="/imageChange",produces="application/json;charset=UTF-8", method=RequestMethod.POST)
+	public JSONObject imageChange(@RequestBody MemberDTO dto) {
+		JSONObject json = new JSONObject();
+		try {
+			String id = jwt.getUserID();
+			dto.setId(id);
+			memberService.imageChange(dto);
+			json.put("message", "image change success");
+		}catch(RuntimeException e) {
+			System.out.println(e);
+			json.put("message","image change fail");
+		}
 
+		
+		return json;
+	}
 }
 
 

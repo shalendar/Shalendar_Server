@@ -9,16 +9,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import kr.co.MIND.member.JwtService;
+import kr.co.MIND.shareList.ShareListDTO;
+import kr.co.MIND.shareList.ShareListService;
 import java.util.List;
 
 @Controller
 @RequestMapping
 public class ScheduleController {
+	@Inject
+	JwtService jwtservice;
 	
 	@Inject
 	ScheduleService scheduleService;
-
+	
+	@Inject
+	ShareListService shareListService;
 
 	@ResponseBody
 	@RequestMapping(value="/showAllSche",produces="application/json;charset=UTF-8", method=RequestMethod.POST)
@@ -55,6 +61,7 @@ public class ScheduleController {
 	public JSONObject createSche(@RequestBody ScheduleDTO dto) {
 		JSONObject json = new JSONObject();
 		try {
+			dto.setId(jwtservice.getUserID());
 			scheduleService.createSchedule(dto);
 			json.put("message", "success");
 		}catch(RuntimeException e) {
@@ -90,6 +97,23 @@ public class ScheduleController {
 			json.put("message", "fail");
 		}
 		
+		return json;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/searchSche",produces="application/json;charset=UTF-8", method=RequestMethod.POST)
+	public JSONObject searchSche(@RequestBody ScheduleDTO dto) {
+		
+		JSONObject json = new JSONObject();
+		dto.setId(jwtservice.getUserID());
+		List result = scheduleService.searchSchedule(dto);
+		if(!result.isEmpty()) {
+			json.put("data", result);
+			json.put("message","success");
+			
+		}else {
+			json.put("message", "no schedule");
+		}
 		return json;
 	}
 }

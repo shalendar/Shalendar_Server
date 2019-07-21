@@ -1,6 +1,7 @@
 package kr.co.MIND.schedule;
 
 public class ScheduleDTO {
+	private String id;
 	private int cid;
 	private int sid;
 	private String title;
@@ -12,6 +13,12 @@ public class ScheduleDTO {
 	private String area;
 	public int getCid() {
 		return cid;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	public void setCid(int cid) {
 		this.cid = cid;

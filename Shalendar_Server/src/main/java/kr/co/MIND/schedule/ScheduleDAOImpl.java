@@ -44,6 +44,11 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 		// TODO Auto-generated method stub
 		mybatis.selectOne("schedule.deleteSche",dto);
 	}
+	@Override
+	public List searchSchedule(ScheduleDTO dto) {
+		// TODO Auto-generated method stub
+		return mybatis.selectList("schedule.searchSche",dto);
+	}
 	
 
 
