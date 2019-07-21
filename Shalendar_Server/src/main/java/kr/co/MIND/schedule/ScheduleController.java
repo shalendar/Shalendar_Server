@@ -92,4 +92,19 @@ public class ScheduleController {
 		
 		return json;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/searchSche",produces="application/json;charset=UTF-8", method=RequestMethod.POST)
+	public JSONObject searchSche(@RequestBody ScheduleDTO dto) {
+		JSONObject json = new JSONObject();
+		List result = scheduleService.searchSchedule(dto);
+		if(!result.isEmpty()) {
+			json.put("data", result);
+			json.put("message","success");
+			
+		}else {
+			json.put("message", "no schedule");
+		}
+		return json;
+	}
 }
