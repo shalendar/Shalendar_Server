@@ -8,6 +8,7 @@
 		<typeAlias type="kr.co.MIND.member.MemberDTO" alias="mdto"></typeAlias>
 		<typeAlias type="kr.co.MIND.shareList.ShareListDTO" alias="sharedto"></typeAlias>
 		<typeAlias type="kr.co.MIND.schedule.ScheduleDTO" alias="sdto"></typeAlias>
+		<typeAlias type="kr.co.MIND.board.BoardDTO" alias="bdto"></typeAlias>
 	</typeAliases>
 
 	<mappers>
@@ -15,7 +16,7 @@
 		<mapper resource="mapper/calendarMapper.xml" />
 		<mapper resource="mapper/shareListMapper.xml" />
 		<mapper resource="mapper/scheduleMapper.xml"/>
-		
+		<mapper resource="mapper/boardMapper.xml"/>
 		
 	</mappers>
 </configuration>

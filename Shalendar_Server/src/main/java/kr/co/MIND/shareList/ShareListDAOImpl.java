@@ -25,6 +25,18 @@ public class ShareListDAOImpl implements ShareListDAO{
 		mybatis.insert("shareList.addUserCal", dto);
 	}
 
+	@Override
+	public List<ShareListDTO> readUserAllCal(ShareListDTO dto) {
+		List<ShareListDTO> result;
+		result = mybatis.selectList("shareList.readUserAllCal", dto);
+		return result;
+	}
+
+	@Override
+	public ShareListDTO userCheck(ShareListDTO dto) {
+		return mybatis.selectOne("shareList.userCheck", dto);
+	}
+
 
 	
 	

@@ -7,14 +7,7 @@ public class CalendarDTO {
 	private String calContent;
 	private int userCount;
 	private String img_url;
-	private String updateCalName;
-	
-	public String getUpdateCalName() {
-		return updateCalName;
-	}
-	public void setUpdateCalName(String updateCalName) {
-		this.updateCalName = updateCalName;
-	}
+
 	public String getId() {
 		return id;
 	}
