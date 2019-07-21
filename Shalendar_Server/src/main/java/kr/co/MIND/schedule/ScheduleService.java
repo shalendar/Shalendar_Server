@@ -8,4 +8,5 @@ public interface ScheduleService {
 	public void updateSchedule(ScheduleDTO dto);
 	public void deleteSchedule(ScheduleDTO dto);
 	public ScheduleDTO showSchedule(ScheduleDTO dto);
+	public List searchSchedule(ScheduleDTO dto);
 }
