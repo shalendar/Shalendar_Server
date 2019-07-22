@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import kr.co.MIND.calendar.CalendarDAOImpl;
 import kr.co.MIND.calendar.CalendarDTO;
+import kr.co.MIND.schedule.ScheduleDTO;
 
 @Service("BoardService")
 public class BoardServiceImpl implements BoardService {
@@ -42,7 +43,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public Map<String, Integer> numOfComments(BoardDTO dto) {
+	public List numOfComments(BoardDTO dto) {
 		// TODO Auto-generated method stub
 			
 		return boardDao.numOfComments(dto);

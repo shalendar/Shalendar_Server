@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.co.MIND.board.BoardDTO;
+import kr.co.MIND.schedule.ScheduleDTO;
 
 public interface BoardService {
 	// ��� ����
@@ -20,5 +21,5 @@ public interface BoardService {
 	
 	public BoardDTO commentCheck(BoardDTO dto);
 	
-	public Map<String,Integer> numOfComments(BoardDTO dto);
+	public List numOfComments(BoardDTO dto);
 }

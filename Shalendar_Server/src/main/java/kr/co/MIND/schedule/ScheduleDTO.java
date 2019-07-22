@@ -11,6 +11,13 @@ public class ScheduleDTO {
 	private String endDate;
 	private String endTime;
 	private String area;
+	private int numOfComments;
+	public int getNumOfComments() {
+		return numOfComments;
+	}
+	public void setNumOfComments(int numOfComments) {
+		this.numOfComments = numOfComments;
+	}
 	public int getCid() {
 		return cid;
 	}

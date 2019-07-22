@@ -9,4 +9,6 @@ public interface ScheduleDAO {
 	public ScheduleDTO showSchedule(ScheduleDTO dto);
 	public List searchSchedule(ScheduleDTO dto);
 	
+	public void updateNumOfComments(ScheduleDTO dto);
+	
 }

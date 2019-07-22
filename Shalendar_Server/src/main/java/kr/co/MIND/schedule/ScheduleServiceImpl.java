@@ -49,4 +49,10 @@ public class ScheduleServiceImpl implements ScheduleService{
 		return scheduleDao.searchSchedule(dto);
 	}
 
+	@Override
+	public void updateNumOfComments(ScheduleDTO dto) {
+		// TODO Auto-generated method stub
+		scheduleDao.updateNumOfComments(dto);
+	}
+
 }

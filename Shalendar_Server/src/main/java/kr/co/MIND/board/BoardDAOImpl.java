@@ -8,6 +8,8 @@ import javax.inject.Inject;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import kr.co.MIND.schedule.ScheduleDTO;
+
 @Repository
 public class BoardDAOImpl implements BoardDAO{
 	
@@ -41,9 +43,9 @@ public class BoardDAOImpl implements BoardDAO{
 	}
 
 	@Override
-	public Map<String, Integer> numOfComments(BoardDTO dto) {
+	public List numOfComments(BoardDTO dto) {
 		// TODO Auto-generated method stub
 		
-		return mybatis.selectOne("board.numOfComments",dto);
+		return mybatis.selectList("board.numOfComments",dto);
 	}
 }

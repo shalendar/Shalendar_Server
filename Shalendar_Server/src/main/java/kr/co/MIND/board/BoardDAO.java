@@ -3,6 +3,8 @@ package kr.co.MIND.board;
 import java.util.List;
 import java.util.Map;
 
+import kr.co.MIND.schedule.ScheduleDTO;
+
 public interface BoardDAO {
 	// ��� ����
 	public void createComments(BoardDTO dto);
@@ -18,6 +20,6 @@ public interface BoardDAO {
 	
 	public BoardDTO commentCheck(BoardDTO dto);
 	
-	public Map<String,Integer> numOfComments(BoardDTO dto);
+	public List numOfComments(BoardDTO dto);
 
 }

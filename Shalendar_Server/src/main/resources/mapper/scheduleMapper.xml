@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="schedule">
+	<!-- 해당 일정 numOfComments 초기화-->
+	<update id="updateNumOfComments" parameterType="java.util.List">
+		update schedule set
+		numOfComments = #{numOfComments}
+		where sid=#{sid}
 	
+	</update>
 	<!-- 일정 검색  -->
 	<select id="searchSche" parameterType = "sdto" resultMap = "scheMap">
 		select * from schedule where id=#{id} and title like '%'||#{title}||'%'
@@ -53,6 +59,7 @@
 		<result property="endDate" column="endDate" />
 		<result property="endTime" column="endTime" />
 		<result property="area" column="area" />
+		<result property="numOfComments" column="numOfComments"/>
 	</resultMap>
 
 </mapper>

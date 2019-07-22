@@ -3,7 +3,7 @@
 <mapper namespace="shareList">
 	
 	<!-- 한캘린더의 사용자 수 조회-->
-	<select id = "numOfUser" resultMap="Integer">
+	<select id = "numOfUser" resultType="Integer">
 		select count(id) from shareList where cid=#{cid}
 	</select>
 	

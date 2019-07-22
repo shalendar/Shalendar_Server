@@ -1,6 +1,7 @@
 package kr.co.MIND.board;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -14,8 +15,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.co.MIND.member.JwtService;
+import kr.co.MIND.member.MemberService;
 import kr.co.MIND.schedule.ScheduleDTO;
-
+import kr.co.MIND.schedule.ScheduleService;
+import kr.co.MIND.calendar.CalendarService;
+import kr.co.MIND.calendar.CalendarDTO;
+import kr.co.MIND.shareList.ShareListService;
+import kr.co.MIND.shareList.ShareListDTO;
 @Controller
 @RequestMapping
 public class BoardController {
@@ -25,6 +31,16 @@ public class BoardController {
 
 	@Inject
 	BoardService boardService;
+	
+	@Inject
+	CalendarService calendarService;
+	@Inject
+	ShareListService shareListService;
+	@Inject
+	ScheduleService scheduleService;
+	
+	@Inject
+	MemberService memberService;
 
 	// ��� ����
 	// cid, sid, token(id), ��۳����� ���� ������� �Ѵ�.
@@ -115,16 +131,36 @@ public class BoardController {
 	@RequestMapping(value="/initBoard",produces="application/json;charset=UTF-8", method=RequestMethod.POST)
 	public JSONObject initBoard(@RequestBody BoardDTO dto) {
 		JSONObject json = new JSONObject();
-		Map<String,Integer> map=boardService.numOfComments(dto);
-		json.put("numOfComments",map);
+		CalendarDTO cdto = new CalendarDTO();
+		cdto.setCid(dto.getCid());
+		cdto = calendarService.getCalInfo(cdto); // calName,calContent,img_url 
+		
+		ShareListDTO ddto = new ShareListDTO();
+		ddto.setCid(dto.getCid());
+		int cnt = shareListService.numOfUser(ddto); // 해당 달력 공유 사람 수 	
+		
+		//sid ,numOfComments 
+		List<ScheduleDTO>sdto=boardService.numOfComments(dto);
+		
+		for(ScheduleDTO object:sdto) {
+			scheduleService.updateNumOfComments(object);
+		}
+		json.put("shareUserData",memberService.readMemCal(ddto));
+
+		
+		ScheduleDTO sdto2 = new ScheduleDTO();
+		int temp = Integer.parseInt(dto.getCid());
+		sdto2.setCid(temp);
+		json.put("calendarData", cdto);
+		json.put("sharePeopleNum", cnt);
+		json.put("scheduleData", scheduleService.showAllSchedule(sdto2));
+		
+		if(scheduleService.showAllSchedule(sdto2)==null) {
+			json.put("message","no schedule");
+			
+		}else {
+			json.put("message", "success");
+		}
 		return json;
-//		if(!result.isEmpty()) {
-//			json.put("data", result);
-//			json.put("message","success");
-//			
-//		}else {
-//			json.put("message", "no schedule");
-//		}
-//		return json;
 	}
 }
