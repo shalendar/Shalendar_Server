@@ -2,6 +2,7 @@ package kr.co.MIND.board;
 
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
@@ -38,5 +39,12 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public BoardDTO commentCheck(BoardDTO dto) {
 		return boardDao.commentCheck(dto);
+	}
+
+	@Override
+	public Map<String, Integer> numOfComments(BoardDTO dto) {
+		// TODO Auto-generated method stub
+			
+		return boardDao.numOfComments(dto);
 	}
 }

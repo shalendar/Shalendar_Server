@@ -1,6 +1,7 @@
 package kr.co.MIND.board;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -37,5 +38,12 @@ public class BoardDAOImpl implements BoardDAO{
 	@Override
 	public BoardDTO commentCheck(BoardDTO dto) {
 		return mybatis.selectOne("board.commentCheck",dto);
+	}
+
+	@Override
+	public Map<String, Integer> numOfComments(BoardDTO dto) {
+		// TODO Auto-generated method stub
+		
+		return mybatis.selectOne("board.numOfComments",dto);
 	}
 }
