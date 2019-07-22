@@ -5,18 +5,19 @@ import java.util.List;
 import kr.co.MIND.calendar.CalendarDTO;
 
 public interface CalendarService {
-	// Ä¶¸°´õ »ý¼º
+	// Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void createCalendar(CalendarDTO dto);
 
-	// Ä¶¸°´õ »èÁ¦
+	// Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void deleteCalendar(CalendarDTO dto);
 
-	// Ä¶¸°´õ ¼öÁ¤
+	// Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void updateCalendar(CalendarDTO dto);
 
-	// Ä¶¸°´õ Á¶È¸ (cid)
+	// Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ (cid)
 	public CalendarDTO readCalendar(CalendarDTO dto);
 
-	// Ä¶¸°´õ ÀüÃ¼ Á¶È¸
+	// Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½È¸
 	public CalendarDTO readAllCalendar(CalendarDTO dto);
+	public CalendarDTO getCalInfo(CalendarDTO dto);
 }

@@ -15,20 +15,20 @@ public class CalendarServiceImpl implements CalendarService {
 	@Inject
 	CalendarDAO CalendarDao;
 
-	//°øÀ¯ ´Þ·Â »ý¼º
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½Þ·ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@Override
 	public void createCalendar(CalendarDTO dto) {
 		CalendarDao.createCalendar(dto);
 		
 	}
 
-	//°øÀ¯ ´Þ·Â »èÁ¦
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½Þ·ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@Override
 	public void deleteCalendar(CalendarDTO dto) {
 		CalendarDao.deleteCalendar(dto);
 	}
 
-	//°øÀ¯ ´Þ·Â ¼öÁ¤
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½Þ·ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@Override
 	public void updateCalendar(CalendarDTO dto) {
 		CalendarDao.updateCalendar(dto);
@@ -43,6 +43,12 @@ public class CalendarServiceImpl implements CalendarService {
 	@Override
 	public CalendarDTO readAllCalendar(CalendarDTO dto) {
 		return CalendarDao.readAllCalendar(dto);
+	}
+
+	@Override
+	public CalendarDTO getCalInfo(CalendarDTO dto) {
+		// TODO Auto-generated method stub
+		return CalendarDao.getCalInfo(dto);
 	}
 	
 	

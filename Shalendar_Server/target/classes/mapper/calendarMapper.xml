@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="calendar">
-	
+	<!-- 게시판 초기화-->
+	<select id="getCalInfo" resultMap="cmap">
+		select calName,calContent,img_url from calendar where cid=#{cid}
+	</select>
 	<!-- 공유달력 생성  -->
 	<insert id="createCal">
 		insert into calendar (id,calName,calContent,img_url) values (#{id},#{calName},#{calContent},#{img_url})

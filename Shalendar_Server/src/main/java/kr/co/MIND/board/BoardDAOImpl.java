@@ -1,11 +1,14 @@
 package kr.co.MIND.board;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
+
+import kr.co.MIND.schedule.ScheduleDTO;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO{
@@ -37,5 +40,12 @@ public class BoardDAOImpl implements BoardDAO{
 	@Override
 	public BoardDTO commentCheck(BoardDTO dto) {
 		return mybatis.selectOne("board.commentCheck",dto);
+	}
+
+	@Override
+	public List numOfComments(BoardDTO dto) {
+		// TODO Auto-generated method stub
+		
+		return mybatis.selectList("board.numOfComments",dto);
 	}
 }

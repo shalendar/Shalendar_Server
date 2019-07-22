@@ -1,22 +1,25 @@
 package kr.co.MIND.board;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.co.MIND.board.BoardDTO;
+import kr.co.MIND.schedule.ScheduleDTO;
 
 public interface BoardService {
-	// ´ñ±Û »ý¼º
+	// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void createComments(BoardDTO dto);
 
-	// ´ñ±Û »èÁ¦
+	// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void deleteComments(BoardDTO dto);
 
-	// ´ñ±Û ¼öÁ¤
+	// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void updateComments(BoardDTO dto);
 
-	// ´ñ±Û Á¶È¸ (cid,sid)
+	// ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ (cid,sid)
 	public List<BoardDTO> readComments(BoardDTO dto);
 	
 	public BoardDTO commentCheck(BoardDTO dto);
-
+	
+	public List numOfComments(BoardDTO dto);
 }
