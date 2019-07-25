@@ -1,13 +1,16 @@
 package kr.co.MIND.calendar;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import kr.co.MIND.calendar.CalendarDTO;
 
 public interface CalendarDAO {
 	// Ä¶¸°´õ »ý¼º
 	public void createCalendar(CalendarDTO dto);
-
+	public void createCalendarImage(Map<String, Object> param);
+	
 	// Ä¶¸°´õ »èÁ¦
 	public void deleteCalendar(CalendarDTO dto);
 

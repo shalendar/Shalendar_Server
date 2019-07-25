@@ -3,9 +3,12 @@
 <mapper namespace="calendar">
 	
 	<!-- 공유달력 생성  -->
-	<insert id="createCal">
-		insert into calendar (id,calName,calContent,img_url) values (#{id},#{calName},#{calContent},#{img_url})
+	<insert id="createCal" parameterType="cdto">
+		insert into calendar (id,calName,calContent) values (#{id},#{calName},#{calContent})
 	</insert>
+	<update id="createCalImage" parameterType="java.util.Map">
+		update calendar set img_url=#{img_url} where id=#{id} and cid=#{cid}
+	</update>
 	
 	<!-- 공유달력 삭제 -->
 	<!-- 삭제할 달력의 이름과 달력 생성시 만든 사용자의 id를 같이 보내야 한다 -->
@@ -21,7 +24,7 @@
 	
 	<!-- 공유달력 조회 -->
 	<select id="readCal" resultMap="cmap">
-		select id,cid from calendar where calName=#{calName} and calContent=#{calContent} and img_url=#{img_url}
+		select id,cid from calendar where calName=#{calName} and calContent=#{calContent} and id=#{id}
 	</select>
 	
 	<!-- 공유달력 전체 조회 -->
