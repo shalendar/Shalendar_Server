@@ -2,12 +2,14 @@ package kr.co.MIND.board;
 
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import kr.co.MIND.calendar.CalendarDAOImpl;
 import kr.co.MIND.calendar.CalendarDTO;
+import kr.co.MIND.schedule.ScheduleDTO;
 
 @Service("BoardService")
 public class BoardServiceImpl implements BoardService {
@@ -38,5 +40,12 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public BoardDTO commentCheck(BoardDTO dto) {
 		return boardDao.commentCheck(dto);
+	}
+
+	@Override
+	public List numOfComments(BoardDTO dto) {
+		// TODO Auto-generated method stub
+			
+		return boardDao.numOfComments(dto);
 	}
 }

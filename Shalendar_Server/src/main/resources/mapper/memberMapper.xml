@@ -29,7 +29,7 @@
 	</select>
 	
 	<select id="select" parameterType="mdto" resultMap="resMap">
-		select * from user where id = #{id}
+		select id,userName,img_url from user where id = #{id}
 	</select>
 	<select id="selectAll" resultMap="resMap">
 		select * from user

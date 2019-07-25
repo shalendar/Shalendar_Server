@@ -15,7 +15,7 @@ public class CalendarDAOImpl implements CalendarDAO{
 	@Inject
 	SqlSessionTemplate	mybatis;
 
-	//°øÀ¯ ´Þ·Â »ý¼º
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½Þ·ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@Override
 	public void createCalendar(CalendarDTO dto) {
 		mybatis.insert("calendar.createCal",dto);
@@ -27,13 +27,13 @@ public class CalendarDAOImpl implements CalendarDAO{
 		
 	}
 
-	//°øÀ¯ ´Þ·Â »èÁ¦
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½Þ·ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@Override
 	public void deleteCalendar(CalendarDTO dto) {
 		mybatis.delete("calendar.deleteCal", dto);
 	}
 
-	//°øÀ¯ ´Þ·Â ¼öÁ¤
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½Þ·ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@Override
 	public void updateCalendar(CalendarDTO dto) {
 		mybatis.update("calendar.updateCal", dto);
@@ -50,7 +50,15 @@ public class CalendarDAOImpl implements CalendarDAO{
 		return mybatis.selectOne("calendar.readAllCal",dto);
 	}
 
+<<<<<<< HEAD
 	
+=======
+	@Override
+	public CalendarDTO getCalInfo(CalendarDTO dto) {
+		// TODO Auto-generated method stub
+		return mybatis.selectOne("calendar.getCalInfo",dto);
+	}
+>>>>>>> d8a685ab49ef6019722fbb944c0f0232721a42c6
 
 
 

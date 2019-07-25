@@ -43,6 +43,12 @@ public class ShareListServiceImpl implements ShareListService {
 		return shareListDao.userCheck(dto);
 	}
 
+	@Override
+	public int numOfUser(ShareListDTO dto) {
+		// TODO Auto-generated method stub
+		return shareListDao.numOfUser(dto);
+	}
+
 	
 	
 	
