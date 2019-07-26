@@ -17,6 +17,7 @@ public interface MemberService {
 	public void imageChange(MemberDTO dto);
 	public MemberDTO profile(MemberDTO dto);
 	
+	public MemberDTO emailCheck(MemberDTO dto);
 	
 	public List<MemberDTO> readMemCal(ShareListDTO dto);
 }

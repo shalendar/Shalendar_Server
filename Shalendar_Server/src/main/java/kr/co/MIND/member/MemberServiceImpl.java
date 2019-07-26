@@ -66,7 +66,7 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.profile(dto);
 	}
 	
-	//ÇÑ°³ÀÇ cid¿¡ ´ëÇÑ »ç¿ëÀÚ id µé
+	//ï¿½Ñ°ï¿½ï¿½ï¿½ cidï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ id ï¿½ï¿½
 		@Override
 		public List<MemberDTO> readMemCal(ShareListDTO dto) {
 			List<ShareListDTO> result = shareListDao.readUserCal(dto);
@@ -77,5 +77,11 @@ public class MemberServiceImpl implements MemberService {
 				mResult.add(memberDao.profile(mdto));
 			}
 			return mResult;
+		}
+
+		@Override
+		public MemberDTO emailCheck(MemberDTO dto) {
+			// TODO Auto-generated method stub
+			return memberDao.select(dto);
 		}
 }

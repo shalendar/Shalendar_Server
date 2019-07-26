@@ -26,6 +26,22 @@ public class MemberController {
 	JwtService jwt;
 	//ȸ������ ����
 	@ResponseBody
+	@RequestMapping(value="/emailCheck",produces="application/json;charset=UTF-8", method=RequestMethod.POST)
+	public JSONObject emailCheck(@RequestBody MemberDTO memberDTO) {
+		JSONObject json = new JSONObject();
+		
+		
+		if(memberService.emailCheck(memberDTO)==null) {
+			json.put("message", "available");
+		}else {
+			json.put("message", "please check email");
+		}
+
+		return json;
+	}
+	
+	
+	@ResponseBody
 	@RequestMapping(value="/signup",produces="application/json;charset=UTF-8", method=RequestMethod.POST)
 	public JSONObject joinMember(@RequestBody MemberDTO memberDTO) {
 		JSONObject json = new JSONObject();
