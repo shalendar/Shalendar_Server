@@ -1,6 +1,7 @@
 package kr.co.MIND.calendar;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.co.MIND.calendar.CalendarDTO;
 
@@ -8,7 +9,13 @@ public interface CalendarService {
 	// Ķ���� ����
 	public void createCalendar(CalendarDTO dto);
 
+	public void createCalendarImage(byte[] image,CalendarDTO dto);
+	
 	// Ķ���� ����
+
+
+	// Ķ���� ����
+
 	public void deleteCalendar(CalendarDTO dto);
 
 	// Ķ���� ����

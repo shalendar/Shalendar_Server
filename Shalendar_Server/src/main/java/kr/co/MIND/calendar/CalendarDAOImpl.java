@@ -1,6 +1,8 @@
 package kr.co.MIND.calendar;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -17,6 +19,12 @@ public class CalendarDAOImpl implements CalendarDAO{
 	@Override
 	public void createCalendar(CalendarDTO dto) {
 		mybatis.insert("calendar.createCal",dto);
+	}
+	
+	@Override
+	public void createCalendarImage(Map<String, Object> param) {
+		mybatis.update("calendar.createCalImage",param);
+		
 	}
 
 	//���� �޷� ����
@@ -42,11 +50,15 @@ public class CalendarDAOImpl implements CalendarDAO{
 		return mybatis.selectOne("calendar.readAllCal",dto);
 	}
 
+
+	
+
 	@Override
 	public CalendarDTO getCalInfo(CalendarDTO dto) {
 		// TODO Auto-generated method stub
 		return mybatis.selectOne("calendar.getCalInfo",dto);
 	}
+
 
 
 

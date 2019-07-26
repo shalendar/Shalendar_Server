@@ -1,7 +1,9 @@
 package kr.co.MIND.calendar;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,16 @@ public class CalendarServiceImpl implements CalendarService {
 	@Override
 	public void createCalendar(CalendarDTO dto) {
 		CalendarDao.createCalendar(dto);
+		
+	}
+	@Override
+	public void createCalendarImage(byte[] image,CalendarDTO dto){
+		Map<String,Object> param = new HashMap<String, Object>();
+		param.put("img_url",image);
+		param.put("id", dto.getId());
+		param.put("cid", dto.getCid());
+		System.out.println(param);
+		CalendarDao.createCalendarImage(param);
 		
 	}
 
