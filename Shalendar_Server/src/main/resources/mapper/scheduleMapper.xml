@@ -10,7 +10,7 @@
 	</update>
 	<!-- 일정 검색  -->
 	<select id="searchSche" parameterType = "sdto" resultMap = "scheMap">
-		select * from schedule where id=#{id} and title like '%'||#{title}||'%'
+		select * from schedule where id=#{id} and title like concat ('%',#{title},'%')
 	</select>
 
 	<!-- @@@@@@@@@@@@@@@cid, sid 부여 생각해봐야된다.@@@@@@@@@@@@@@@@@-->
@@ -21,7 +21,7 @@
 	
 	<!-- 상세 일정 보내 주기 --> 
 	<select id = "showSche" parameterType = "int" resultMap = "scheMap">
-		select * from schedule where sid = #{sid}
+		select * from schedule where sid = #{sid} group by startDate and startTime
 	</select>
 	
 	<!-- 스케줄 생성 -->

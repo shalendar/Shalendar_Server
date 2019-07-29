@@ -1,5 +1,7 @@
 package kr.co.MIND.schedule;
 
+import java.util.Date;
+
 public class ScheduleDTO {
 	private String id;
 	private int cid;
@@ -48,6 +50,8 @@ public class ScheduleDTO {
 	public void setsContent(String sContent) {
 		this.sContent = sContent;
 	}
+
+
 	public String getStartDate() {
 		return startDate;
 	}
