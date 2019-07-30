@@ -49,21 +49,10 @@ public class CalendarDAOImpl implements CalendarDAO{
 	public CalendarDTO readAllCalendar(CalendarDTO dto) {
 		return mybatis.selectOne("calendar.readAllCal",dto);
 	}
-
-<<<<<<< HEAD
-	
-=======
 	@Override
 	public CalendarDTO getCalInfo(CalendarDTO dto) {
 		// TODO Auto-generated method stub
 		return mybatis.selectOne("calendar.getCalInfo",dto);
 	}
->>>>>>> d8a685ab49ef6019722fbb944c0f0232721a42c6
-
-
-
-	
-	
-	
 
 }
