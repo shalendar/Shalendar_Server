@@ -1,15 +1,20 @@
 package kr.co.MIND.calendar;
 
 
+import java.io.File;
+import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.MIND.calendar.CalendarDAOImpl;
 import kr.co.MIND.calendar.CalendarDTO;
+import java.util.UUID;
 
 @Service("CalendarService")
 public class CalendarServiceImpl implements CalendarService {
@@ -17,6 +22,7 @@ public class CalendarServiceImpl implements CalendarService {
 	@Inject
 	CalendarDAO CalendarDao;
 
+	private static final String UPLOAD_PATH = "C:\\Graduation\\uploadFile\\";
 	//���� �޷� ����
 	@Override
 	public void createCalendar(CalendarDTO dto) {
@@ -62,8 +68,28 @@ public class CalendarServiceImpl implements CalendarService {
 		// TODO Auto-generated method stub
 		return CalendarDao.getCalInfo(dto);
 	}
+	@Override
+	public String upload(MultipartFile file) throws IOException{
+		String orgName = file.getOriginalFilename();
+		String url;
+		try {
+			String ext = orgName.substring(orgName.lastIndexOf('.'));
+			
+			String saveFileName = getUuid() + ext;
+			
+			File uploadFile = new File(UPLOAD_PATH,saveFileName);
+			file.transferTo(uploadFile);
+			url = UPLOAD_PATH+saveFileName;
+			
+		} catch (StringIndexOutOfBoundsException e) {
+			url = null;
+		}
+		return url;
+	}
 	
-	
+	public static String getUuid() {
+        return UUID.randomUUID().toString().replaceAll("-", "");
+    }
 	
 	
 }

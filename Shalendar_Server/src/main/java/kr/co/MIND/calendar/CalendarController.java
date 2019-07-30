@@ -47,9 +47,11 @@ public class CalendarController {
 
 		try {
 			CalendarDTO.setId(jwtService.getUserID());
+			String url = calendarService.upload(file);
+			CalendarDTO.setImg_url(url);
 			calendarService.createCalendar(CalendarDTO);
-			byte[ ] fileData = file.getBytes();
-			System.out.println(file.getContentType());
+//			byte[ ] fileData = file.getBytes();	
+//			System.out.println(file.getContentType());
 			
 
 			// ShareList에도 공유달력 생성자가 자동으로 추가되어야 한다.
@@ -60,7 +62,8 @@ public class CalendarController {
 			dto.setId(result.getId());
 			dto.setCid(result.getCid());
 			shareListService.addUserCal(dto);
-			calendarService.createCalendarImage(fileData,result);
+			
+//			calendarService.createCalendarImage(fileData,result);
 			map.put("message", "success");
 		} catch (RuntimeException e) {
 			System.out.println(e);

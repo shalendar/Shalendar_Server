@@ -11,10 +11,14 @@ public interface CalendarDAO {
 	public void createCalendar(CalendarDTO dto);
 	public void createCalendarImage(Map<String, Object> param);
 	
+	// Ķ���� ���
+
+
 	// Ķ���� ����
 
 
 	// Ķ���� ����
+
 
 	public void deleteCalendar(CalendarDTO dto);
 
