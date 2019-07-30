@@ -1,7 +1,10 @@
 package kr.co.MIND.calendar;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.MIND.calendar.CalendarDTO;
 
@@ -24,4 +27,7 @@ public interface CalendarService {
 	// Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½È¸
 	public CalendarDTO readAllCalendar(CalendarDTO dto);
 	public CalendarDTO getCalInfo(CalendarDTO dto);
+	
+	//ÆÄÀÏ ¾÷·Îµå ¼­ºñ½º
+	public String upload(MultipartFile file) throws IOException;
 }
