@@ -38,10 +38,12 @@ public class MemberDAOImpl implements MemberDAO{
 		String name = mybatis.selectOne("member.joinCheck",dto);	
 		return (name==null)?true:false;
 	}
-//	public MemberDTO select(MemberDTO dto) {
-//		return myBatis.selectOne("mem.select", dto);
-//		
-//	}
+	
+	@Override
+	public MemberDTO select(MemberDTO dto) {
+		return mybatis.selectOne("member.select", dto);
+		
+	}
 
 	@Override
 	public void imgChange(MemberDTO dto) {
