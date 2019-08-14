@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.co.MIND.Invite.InviteService;
 import kr.co.MIND.member.JwtService;
 import kr.co.MIND.member.MemberDTO;
 import kr.co.MIND.member.MemberService;
 import kr.co.MIND.schedule.ScheduleDTO;
+import kr.co.MIND.Invite.InviteDTO;
 
 @Controller
 @RequestMapping
@@ -31,6 +33,10 @@ public class ShareListController {
 	MemberService memberService;
 	@Inject
 	JwtService jwtService;
+	@Inject
+	InviteService inviteService;
+	
+	
 	
 	
 	// Ķ���� ����� �߰�
@@ -48,23 +54,33 @@ public class ShareListController {
 			
 			PostInvitation push = new PostInvitation();
 			
-			List <String> li= (List<String>) json.get("deviceToken");
+			List <String> li= (List<String>) json.get("receiver");
 		
-		   ArrayList<String> deviceToken = new ArrayList<String>(); // device Token
+		   ArrayList<String> deviceToken = new ArrayList<String>(); // 회원가입시 받아온 device Token
 			for(int i=0;i<li.size();i++) {
 				deviceToken.add(memberService.invite(li.get(i)));
 			}
-//		    System.out.println(deviceToken);
-			ArrayList<String> array = new ArrayList<String>();
-			array.add("e3gjz-7a0RY:APA91bEXluKkkqGA-XDbKULttRD2LdbgIRpoZGbkJBHMojE9P0bIfTr9QA62gBVbS9F7xneycHRt8ayQTp2p1LngVEEWiyelf-mOUynR5Om9KNniumD0TmypB8HQfaBsaobJigwutwe4");
-			array.add("e3gjz-7a0RY:APA91bEXluKkkqGA-XDbKULttRD2LdbgIRpoZGbkJBHMojE9P0bIfTr9QA62gBVbS9F7xneycHRt8ayQTp2p1LngVEEWiyelf-mOUynR5Om9KNniumD0TmypB8HQfaBsaobJigwutwe4");
+			for(int i=0;i<li.size();i++) { //초대 테이블에 저장 
+				InviteDTO invDto = new InviteDTO();
+				invDto.setCid((int) json.get("cid"));
+				invDto.setcName((String)json.get("cName"));
+				invDto.setReceiver(li.get(i));
+				invDto.setSender((String)json.get("sender"));
+				invDto.setSender_img((String)json.get("sender_img"));
+				invDto.setSenderName((String)json.get("senderName"));
+				inviteService.storeInvitation(invDto);
+			}
+			JSONObject send = new JSONObject();
+			try {
+				push.push(deviceToken,(String)json.get("senderName"),(String)json.get("cName"));
+				send.put("message","success");
+			}catch(IOException e) {
+				send.put("message", "fail");
+				e.printStackTrace();
+			}
 			
-			push.push(array, "gooil", "제발 창렬아");
-			json.put("deviceToken", deviceToken);
 			
-			
-			
-			return json;
+			return send;
 		
 	}
 	
