@@ -21,11 +21,11 @@ public class PostInvitation {
 
         String url = "https://fcm.googleapis.com/fcm/send";
         
-        String message=userName+"님께서 "+calName+" 공유 달력에 초대했습니다. ";
+      
         JSONObject json = new JSONObject();
         JSONObject json2 = new JSONObject();
-        json2.put("title", "aa");
-        json2.put("text", "aa");
+        json2.put("title", userName+" 초대장");
+        json2.put("text",calName+" 공유 달력에 초대했습니다.");
         json2.put("sound", "default");
         
 //        json.put("to",deviceToken);
