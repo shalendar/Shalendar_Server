@@ -3,11 +3,15 @@ package kr.co.MIND.calendar;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import kr.co.MIND.image.ImageService;
 import kr.co.MIND.member.JwtService;
 import kr.co.MIND.member.MemberDTO;
 import kr.co.MIND.member.MemberService;
@@ -39,16 +44,29 @@ public class CalendarController {
 	@Inject
 	JwtService jwtService;
 
+	@Inject
+	ImageService imageService;
+	
+	@Resource(name="uploadPath")
+	private String uploadPath;
+	
 	// 공유달력 생성
 	@ResponseBody
 	@RequestMapping(value = "/createCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST,consumes = {"multipart/form-data"})
-	public Map<String, Object> createCalendar(@RequestPart("dto") CalendarDTO CalendarDTO,@RequestPart("file") MultipartFile file) {
+	public Map<String, Object> createCalendar(MultipartFile file,String calName, String calContent) {
 		Map<String, Object> map = new HashMap<String, Object>();
-
+		CalendarDTO CalendarDTO = new CalendarDTO();
+		
 		try {
+			ResponseEntity<String> img_path = new ResponseEntity<>(
+					imageService.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()), HttpStatus.CREATED);
+			String user_imgPath = (String) img_path.getBody();
+			
 			CalendarDTO.setId(jwtService.getUserID());
-			String url = calendarService.upload(file);
-			CalendarDTO.setImg_url(url);
+//			String url = calendarService.upload(file);
+			CalendarDTO.setImg_url(user_imgPath);
+			CalendarDTO.setCalName(calName);
+			CalendarDTO.setCalContent(calContent);
 			calendarService.createCalendar(CalendarDTO);
 //			byte[ ] fileData = file.getBytes();	
 //			System.out.println(file.getContentType());
@@ -92,16 +110,28 @@ public class CalendarController {
 
 	// 공유달력 수정
 	@ResponseBody
-	@RequestMapping(value = "/updateCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-	public Map<String, Object> updateCalendar(@RequestBody CalendarDTO CalendarDTO) {
+	@RequestMapping(value = "/updateCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST,consumes = {"multipart/form-data"})
+	public Map<String, Object> updateCalendar(MultipartFile file,String cid,String calName, String calContent) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		CalendarDTO CalendarDTO = new CalendarDTO();
 		try {
+			ResponseEntity<String> img_path = new ResponseEntity<>(
+					imageService.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()), HttpStatus.CREATED);
+			String user_imgPath = (String) img_path.getBody();
+			
 			CalendarDTO.setId(jwtService.getUserID());
+			CalendarDTO.setCid(cid);
+			CalendarDTO.setCalName(calName);
+			CalendarDTO.setCalContent(calContent);
+			CalendarDTO.setImg_url(user_imgPath);
+			
 			calendarService.updateCalendar(CalendarDTO);
 			map.put("message", "success");
 		} catch (RuntimeException e) {
 			System.out.println(e);
 			map.put("message", "fail");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return map;
 	}
