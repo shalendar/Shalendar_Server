@@ -1,5 +1,7 @@
 package kr.co.MIND.member;
 
+
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -38,10 +40,12 @@ public class MemberDAOImpl implements MemberDAO{
 		String name = mybatis.selectOne("member.joinCheck",dto);	
 		return (name==null)?true:false;
 	}
-//	public MemberDTO select(MemberDTO dto) {
-//		return myBatis.selectOne("mem.select", dto);
-//		
-//	}
+	
+	@Override
+	public MemberDTO select(MemberDTO dto) {
+		return mybatis.selectOne("member.select", dto);
+		
+	}
 
 	@Override
 	public void imgChange(MemberDTO dto) {
@@ -53,5 +57,12 @@ public class MemberDAOImpl implements MemberDAO{
 	@Override
 	public MemberDTO profile(MemberDTO dto) {
 		return mybatis.selectOne("member.select",dto);
+	}
+
+	@Override
+	public String invite(String id) {
+		// TODO Auto-generated method stub
+		return mybatis.selectOne("member.invite",id);
+		
 	}
 }

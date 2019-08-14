@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="invite">
+
+	<insert id="storeInvitation" parameterType="idto">
+		insert into invite
+		(sender,receiver,senderName,sender_img,cid,cName)
+		values
+		(#{sender},#{receiver},#{senderName},#{sender_img},#{cid},#{cName})
+	</insert>
+
+
+	<resultMap type="idto" id="invMap">
+		<result property="sender" column="sender" />
+		<result property="receiver" column="receiver" />
+		<result property="senderName" column="senderName" />
+		<result property="sender_img" column="sender_img" />
+		<result property="cid" column="cid" />
+		<result property="cName" column="cName" />
+	</resultMap>
+
+</mapper>

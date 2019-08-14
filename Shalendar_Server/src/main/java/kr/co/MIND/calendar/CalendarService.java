@@ -13,9 +13,17 @@ public interface CalendarService {
 	public void createCalendar(CalendarDTO dto);
 	public void createCalendarImage(byte[] image,CalendarDTO dto);
 	
-	// Ä¶¸°´õ »èÁ¦
+	// Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 
 	// Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+
+	public void createCalendarImage(byte[] image,CalendarDTO dto);
+	
+	// Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+
+
+	// Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+
 	public void deleteCalendar(CalendarDTO dto);
 
 	// Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
@@ -28,6 +36,6 @@ public interface CalendarService {
 	public CalendarDTO readAllCalendar(CalendarDTO dto);
 	public CalendarDTO getCalInfo(CalendarDTO dto);
 	
-	//ÆÄÀÏ ¾÷·Îµå ¼­ºñ½º
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½
 	public String upload(MultipartFile file) throws IOException;
 }

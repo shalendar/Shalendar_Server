@@ -1,5 +1,7 @@
 package kr.co.MIND.member;
 
+
+
 import javax.servlet.http.HttpServletResponse;
 
 
@@ -12,7 +14,10 @@ public interface MemberDAO {
 	public void joinMember(MemberDTO dto);
 	public boolean joinCheck(MemberDTO dto);
 	public void imgChange(MemberDTO dto);
-	
+	public MemberDTO select(MemberDTO dto);
 	public MemberDTO profile(MemberDTO dto);
+	
+	//사용자 초대 전 푸쉬 알림 
+	public String invite(String id);
 	
 }

@@ -1,7 +1,9 @@
 package kr.co.MIND.board;
 
 import java.util.HashMap;
-import java.util.Iterator;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import java.util.List;
 import java.util.Map;
 
@@ -49,6 +51,11 @@ public class BoardController {
 	public Map<String, Object> createComments(@RequestBody BoardDTO BoardDTO) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
+			Date time = new Date();
+			SimpleDateFormat dateformat = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");
+			String temp = dateformat.format(time);
+			
+			BoardDTO.setRdate(temp);
 			BoardDTO.setId(jwtService.getUserID());
 			boardService.createComments(BoardDTO);
 			
@@ -67,6 +74,11 @@ public class BoardController {
 	public Map<String, Object> updateComments(@RequestBody BoardDTO BoardDTO) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
+			Date time = new Date();
+			SimpleDateFormat dateformat = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");
+			String temp = dateformat.format(time);
+			
+			BoardDTO.setRdate(temp);
 			BoardDTO.setId(jwtService.getUserID());
 			BoardDTO check = new BoardDTO();
 			check = boardService.commentCheck(BoardDTO);
