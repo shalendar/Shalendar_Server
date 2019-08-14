@@ -19,5 +19,7 @@ public interface MemberService {
 	
 	public MemberDTO emailCheck(MemberDTO dto);
 	
+	public String invite(String id);
+	
 	public List<MemberDTO> readMemCal(ShareListDTO dto);
 }

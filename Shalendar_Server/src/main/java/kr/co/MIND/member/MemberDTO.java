@@ -5,6 +5,7 @@ public class MemberDTO {
 	private String pw;
 	private String userName;
 	private String img_url;
+	private String deviceToken;
 	
 	
 	public String getId() {
@@ -33,7 +34,12 @@ public class MemberDTO {
 	}
 
 	
-
+	public String getDeviceToken() {
+		return deviceToken;
+	}
+	public void setDeviceToken(String deviceToken) {
+		this.deviceToken = deviceToken;
+	}
 	
 	
 	

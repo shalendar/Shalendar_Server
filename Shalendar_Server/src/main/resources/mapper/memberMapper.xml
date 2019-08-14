@@ -28,6 +28,12 @@
 		where id = #{id} and pw=#{pw}
 	</select>
 	
+     <!-- 사용자 초대 전 Push 알림  -->
+	<select id="invite"  resultType="String">
+		select deviceToken from user where id = #{id}
+	</select>
+	
+	
 	<select id="select" parameterType="mdto" resultMap="resMap">
 		select id,userName,img_url from user where id = #{id}
 	</select>
@@ -39,6 +45,7 @@
 		<result property="pw" column="pw"/>
 		<result property="userName" column="userName"/>
 		<result property="img_url" column="img_url"/>
+		<result property="deviceToken" column="deviceToken"/>
 	</resultMap>
 	
 	<insert id="joinMember">
