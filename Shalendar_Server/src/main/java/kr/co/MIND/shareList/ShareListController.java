@@ -1,10 +1,13 @@
 package kr.co.MIND.shareList;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+
 
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.co.MIND.member.JwtService;
 import kr.co.MIND.member.MemberDTO;
 import kr.co.MIND.member.MemberService;
+import kr.co.MIND.schedule.ScheduleDTO;
 
 @Controller
 @RequestMapping
@@ -27,11 +31,43 @@ public class ShareListController {
 	MemberService memberService;
 	@Inject
 	JwtService jwtService;
-
-	// Ä¶¸°´õ »ç¿ëÀÚ Ãß°¡
-	// cid¿¡ ÀÖ´Â shareList.idµé Áß¿¡¼­
-	// Ä¶¸°´õ¿¡ ÃÊ´ëµÈ »ç¶÷µé¸¸ ¸¸ Ãß°¡ °¡´É (token.id == shareList.id)
-	// ÀÌ¹Ì ÃÊ´ëµÇ¾îÀÖ´Â»ç¶÷Àº Ãß°¡ x
+	
+	
+	// Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
+	// cidï¿½ï¿½ ï¿½Ö´ï¿½ shareList.idï¿½ï¿½ ï¿½ß¿ï¿½ï¿½ï¿½
+	// Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½é¸¸ ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½ï¿½ (token.id == shareList.id)
+	// ï¿½Ì¹ï¿½ ï¿½Ê´ï¿½Ç¾ï¿½ï¿½Ö´Â»ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ x
+	
+	//ì„œë²„í‚¤ 
+	//AAAAhPVesjc:APA91bGb7MLL_jj5JRWh7rV3BWlCk_ZVBi2erViQXB4xU3BHALwmXKMMslB4VU7P-nnVao5it35zZ-5r6J26SrkcVeUPqn2gGIHJJFp_1hm3w0gSqi4gsp5T3TN5DmDvmxwbw0STA-V3
+	//sender ID
+	//571052306999
+	@ResponseBody
+	@RequestMapping(value = "/pushInvitation", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
+		public JSONObject pushInvitation(@RequestBody JSONObject json) throws IOException {
+			
+			PostInvitation push = new PostInvitation();
+			
+			List <String> li= (List<String>) json.get("deviceToken");
+		
+		   ArrayList<String> deviceToken = new ArrayList<String>(); // device Token
+			for(int i=0;i<li.size();i++) {
+				deviceToken.add(memberService.invite(li.get(i)));
+			}
+//		    System.out.println(deviceToken);
+			ArrayList<String> array = new ArrayList<String>();
+			array.add("e3gjz-7a0RY:APA91bEXluKkkqGA-XDbKULttRD2LdbgIRpoZGbkJBHMojE9P0bIfTr9QA62gBVbS9F7xneycHRt8ayQTp2p1LngVEEWiyelf-mOUynR5Om9KNniumD0TmypB8HQfaBsaobJigwutwe4");
+			array.add("e3gjz-7a0RY:APA91bEXluKkkqGA-XDbKULttRD2LdbgIRpoZGbkJBHMojE9P0bIfTr9QA62gBVbS9F7xneycHRt8ayQTp2p1LngVEEWiyelf-mOUynR5Om9KNniumD0TmypB8HQfaBsaobJigwutwe4");
+			
+			push.push(array, "gooil", "ì œë°œ ì°½ë ¬ì•„");
+			json.put("deviceToken", deviceToken);
+			
+			
+			
+			return json;
+		
+	}
+	
 	@ResponseBody
 	@RequestMapping(value = "/addUserCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
 	public Map<String, Object> addUserCal(@RequestBody ShareListDTO ShareListDTO) {
@@ -61,8 +97,8 @@ public class ShareListController {
 		
 		return map;
 	}
-	// Ä¶¸°´õ¸¦ »ç¿ëÇÏ°í ÀÖ´Â »ç¶÷¸¸ Á¶È¸ °¡´É
-	// Ä¶¸°´õ¸¦ »ç¿ëÇÏ°í ÀÖ´Â »ç¿ëÀÚµéÀ» Á¶È¸
+	// Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸ ï¿½ï¿½ï¿½ï¿½
+	// Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½ ï¿½ï¿½È¸
 	@ResponseBody
 	@RequestMapping(value = "/readUserCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
 	public Map<String, Object> readUserCal(@RequestBody ShareListDTO ShareListDTO) {
