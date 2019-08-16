@@ -1,5 +1,7 @@
 package kr.co.MIND.Invite;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -17,6 +19,21 @@ public class InviteServiceImpl implements InviteService{
 		inviteDAO.storeInvitation(dto);
 		return;
 		
+	}
+
+	@Override
+	public List<InviteDTO> showInvitation(String id) {
+		// TODO Auto-generated method stub
+		
+		return inviteDAO.showInvitation(id);
+		
+	}
+
+	@Override
+	public void deleteInvitation(InviteDTO dto) {
+		// TODO Auto-generated method stub
+		inviteDAO.deleteInvitation(dto);
+		return;
 	}
 
 }

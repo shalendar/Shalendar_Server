@@ -8,6 +8,15 @@
 		values
 		(#{sender},#{receiver},#{senderName},#{sender_img},#{cid},#{cName})
 	</insert>
+	
+	<select id="showInvitation" parameterType="String" resultMap ="invMap">
+		select * from invite where receiver = #{id}
+	</select>
+	
+	<delete id="deleteInvitation" parameterType="idto">
+		delete from invite where sender=#{sender} and receiver=#{receiver} and cid=#{cid}
+	</delete>
+	
 
 
 	<resultMap type="idto" id="invMap">

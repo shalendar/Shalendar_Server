@@ -35,6 +35,7 @@ public class MemberDAOImpl implements MemberDAO{
 	public void joinMember(MemberDTO dto) {
 		mybatis.insert("member.joinMember",dto);
 	}
+	
 	@Override
 	public boolean joinCheck(MemberDTO dto) {
 		String name = mybatis.selectOne("member.joinCheck",dto);	

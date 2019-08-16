@@ -17,13 +17,6 @@ public interface CalendarService {
 
 	// Ķ���� ����
 
-	public void createCalendarImage(byte[] image,CalendarDTO dto);
-	
-	// Ķ���� ����
-
-
-	// Ķ���� ����
-
 	public void deleteCalendar(CalendarDTO dto);
 
 	// Ķ���� ����
