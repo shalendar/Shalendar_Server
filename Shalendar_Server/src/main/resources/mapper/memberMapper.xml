@@ -49,7 +49,7 @@
 	</resultMap>
 	
 	<insert id="joinMember">
-		insert into user values (#{id}, #{pw}, #{userName},#{img_url})
+		insert into user values (#{id}, #{pw}, #{userName},#{img_url},#{deviceToken})
 	</insert>
 	<select id="joinCheck" resultType="String">
 		select * from user where id = #{id}

@@ -84,17 +84,15 @@ public class ShareListController {
 		
 	}
 	
-	@ResponseBody
-	@RequestMapping(value = "/addUserCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-	public Map<String, Object> addUserCal(@RequestBody ShareListDTO ShareListDTO) {
+	public Map<String, Object> addUserCal(ShareListDTO ShareListDTO,String sender) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			MemberDTO mdto = new MemberDTO();
-			mdto.setId(ShareListDTO.getId());
+			mdto.setId(ShareListDTO.getId());  //초대 대상 receiver
 			ShareListDTO dto = new ShareListDTO();
 			ShareListDTO dto2 = new ShareListDTO();
 			ShareListDTO dto3 = new ShareListDTO();
-			dto.setId(jwtService.getUserID());
+			dto.setId(sender); // 보낸 사람 sender 
 			dto.setCid(ShareListDTO.getCid());
 			dto2 = shareListService.userCheck(dto);
 			dto3 = shareListService.userCheck(ShareListDTO);
@@ -102,12 +100,12 @@ public class ShareListController {
 			System.out.println(joinCheck);
 			if(dto2!=null && dto3==null && !joinCheck) {
 				shareListService.addUserCal(ShareListDTO);
-				map.put("message", "success");
+				map.put("message", "accept");
 			}else {
 				map.put("message", "fail");
 			}
 		} catch (RuntimeException e) {
-			System.out.println(e);
+			System.out.println("@@@@");
 			map.put("message", "fail");
 		}
 		
