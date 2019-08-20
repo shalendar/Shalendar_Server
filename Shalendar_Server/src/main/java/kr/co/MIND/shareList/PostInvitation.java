@@ -16,10 +16,14 @@ import org.json.simple.JSONObject;
 public class PostInvitation {
 
     private static HttpURLConnection con;
+
     
 //    -----------카톡 공지에 있는 서버키 입력란 --------------
     private static final String serverKey="";
 //    -----------------------------------------------
+
+
+
     public static void push(ArrayList<String> deviceToken,String userName,String calName) throws MalformedURLException, ProtocolException, IOException {
 
         String url = "https://fcm.googleapis.com/fcm/send";
