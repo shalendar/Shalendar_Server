@@ -16,7 +16,10 @@ import org.json.simple.JSONObject;
 public class PostInvitation {
 
     private static HttpURLConnection con;
-    private static final String serverKey="AAAAhPVesjc:APA91bEDuSeZgWdX8-ATS97pYEWSZH68oJ4F2FHlUCfJVmp7lNXMIrwhdaAJwtSqaspkLgrmADQdyv_PF3V1Oty_pRnO6e5pL4aeff70ve7JuB6tp7QVCTgUS_3bJ_5JqUvOpTVd9n4Y";
+    
+//    -----------카톡 공지에 있는 서버키 입력란 --------------
+    private static final String serverKey="";
+//    -----------------------------------------------
     public static void push(ArrayList<String> deviceToken,String userName,String calName) throws MalformedURLException, ProtocolException, IOException {
 
         String url = "https://fcm.googleapis.com/fcm/send";
@@ -24,8 +27,8 @@ public class PostInvitation {
       
         JSONObject json = new JSONObject();
         JSONObject json2 = new JSONObject();
-        json2.put("title", userName+" 초대장");
-        json2.put("text",calName+" 공유 달력에 초대했습니다.");
+        json2.put("title", userName+" 珥덈��옣");
+        json2.put("text",calName+" 怨듭쑀 �떖�젰�뿉 珥덈��뻽�뒿�땲�떎.");
         json2.put("sound", "default");
         
 //        json.put("to",deviceToken);

@@ -1,32 +1,28 @@
 package kr.co.MIND.calendar;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import kr.co.MIND.image.ImageService;
 import kr.co.MIND.member.JwtService;
 import kr.co.MIND.member.MemberDTO;
 import kr.co.MIND.member.MemberService;
 import kr.co.MIND.shareList.*;
+import kr.co.MIND.util.S3Util;
+import kr.co.MIND.util.UploadFileUtils;
 
 @Controller
 @RequestMapping
@@ -44,43 +40,46 @@ public class CalendarController {
 	@Inject
 	JwtService jwtService;
 
-	@Inject
-	ImageService imageService;
 	
-	@Resource(name="uploadPath")
-	private String uploadPath;
+	S3Util s3 = new S3Util();
+	private String bucketName = "shalendarmind";
 	
 	// 공유달력 생성
 	@ResponseBody
-	@RequestMapping(value = "/createCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST,consumes = {"multipart/form-data"})
-	public Map<String, Object> createCalendar(MultipartFile file,String calName, String calContent) {
+	@RequestMapping(value = "/createCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST, consumes = {
+			"multipart/form-data" })
+	public Map<String, Object> createCalendar(MultipartFile file, String calName, String calContent) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		CalendarDTO CalendarDTO = new CalendarDTO();
-		
+
 		try {
+			
+			String uploadpath = "calendarImage";
 			ResponseEntity<String> img_path = new ResponseEntity<>(
-					imageService.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()), HttpStatus.CREATED);
-			String user_imgPath = (String) img_path.getBody();
+					UploadFileUtils.uploadFile(uploadpath, file.getOriginalFilename(), file.getBytes()),
+					HttpStatus.CREATED);
+			String img_url = (String) img_path.getBody();
+			System.out.println(img_url);
+			String url = s3.getFileURL(bucketName, uploadpath+img_url);
 			
 			CalendarDTO.setId(jwtService.getUserID());
 //			String url = calendarService.upload(file);
-			CalendarDTO.setImg_url(user_imgPath);
+			CalendarDTO.setImg_url(url);
 			CalendarDTO.setCalName(calName);
 			CalendarDTO.setCalContent(calContent);
 			calendarService.createCalendar(CalendarDTO);
 //			byte[ ] fileData = file.getBytes();	
 //			System.out.println(file.getContentType());
-			
 
 			// ShareList에도 공유달력 생성자가 자동으로 추가되어야 한다.
 			ShareListDTO dto = new ShareListDTO();
 			CalendarDTO result = calendarService.readCalendar(CalendarDTO);
-			
+
 			System.out.println(result.getCid());
 			dto.setId(result.getId());
 			dto.setCid(result.getCid());
 			shareListService.addUserCal(dto);
-			
+
 //			calendarService.createCalendarImage(fileData,result);
 			map.put("message", "success");
 		} catch (RuntimeException e) {
@@ -110,21 +109,26 @@ public class CalendarController {
 
 	// 공유달력 수정
 	@ResponseBody
-	@RequestMapping(value = "/updateCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST,consumes = {"multipart/form-data"})
-	public Map<String, Object> updateCalendar(MultipartFile file,String cid,String calName, String calContent) {
+	@RequestMapping(value = "/updateCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST, consumes = {
+			"multipart/form-data" })
+	public Map<String, Object> updateCalendar(MultipartFile file, String cid, String calName, String calContent) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		CalendarDTO CalendarDTO = new CalendarDTO();
 		try {
+			String uploadpath = "calendarImage";
 			ResponseEntity<String> img_path = new ResponseEntity<>(
-					imageService.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()), HttpStatus.CREATED);
-			String user_imgPath = (String) img_path.getBody();
+					UploadFileUtils.uploadFile(uploadpath, file.getOriginalFilename(), file.getBytes()),
+					HttpStatus.CREATED);
+			String img_url = (String) img_path.getBody();
 			
+			String url = s3.getFileURL(bucketName, uploadpath+img_url);
+
 			CalendarDTO.setId(jwtService.getUserID());
 			CalendarDTO.setCid(cid);
 			CalendarDTO.setCalName(calName);
 			CalendarDTO.setCalContent(calContent);
-			CalendarDTO.setImg_url(user_imgPath);
-			
+			CalendarDTO.setImg_url(url);
+
 			calendarService.updateCalendar(CalendarDTO);
 			map.put("message", "success");
 		} catch (RuntimeException e) {
@@ -141,9 +145,11 @@ public class CalendarController {
 	// 사용자들 정보도 보내줄 것
 	@ResponseBody
 	@RequestMapping(value = "/readAllCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-	public Map<String, Object> readAllCalendar(@RequestBody CalendarDTO CalendarDTO) {
+	public Map<String, Object> readAllCalendar(@RequestBody CalendarDTO CalendarDTO) throws Exception {
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
+			
 			ShareListDTO dto = new ShareListDTO();
 			dto.setId(jwtService.getUserID());
 			List<ShareListDTO> resultCid = shareListService.readUserAllCal(dto);

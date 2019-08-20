@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 public class MemberDAOImpl implements MemberDAO{
 	
 	@Inject
-	
 	SqlSessionTemplate	mybatis;
 	
 	@Override
