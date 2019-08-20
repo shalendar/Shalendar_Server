@@ -2,6 +2,8 @@
 # Created by https://www.gitignore.io/api/java,macos,windows
 # Edit at https://www.gitignore.io/?templates=java,macos,windows
 
+Shalendar_Server/target/classes/files/calendarImage/
+
 ### Java ###
 # Compiled class file
 *.class
