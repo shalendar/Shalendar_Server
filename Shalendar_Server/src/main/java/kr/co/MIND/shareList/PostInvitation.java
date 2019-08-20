@@ -16,7 +16,7 @@ import org.json.simple.JSONObject;
 public class PostInvitation {
 
     private static HttpURLConnection con;
-    private static final String serverKey="AAAAhPVesjc:APA91bEDuSeZgWdX8-ATS97pYEWSZH68oJ4F2FHlUCfJVmp7lNXMIrwhdaAJwtSqaspkLgrmADQdyv_PF3V1Oty_pRnO6e5pL4aeff70ve7JuB6tp7QVCTgUS_3bJ_5JqUvOpTVd9n4Y";
+    private static final String serverKey="";
     public static void push(ArrayList<String> deviceToken,String userName,String calName) throws MalformedURLException, ProtocolException, IOException {
 
         String url = "https://fcm.googleapis.com/fcm/send";
