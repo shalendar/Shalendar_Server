@@ -2,10 +2,16 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 	<context:component-scan
 		base-package="kr.co.MIND"></context:component-scan>
+
+	<context:property-placeholder
+		location="classpath:files/db.properties" />
+	
 
 	<!-- MultipartResolver -->
 	<bean id="multipartResolver"
@@ -14,11 +20,6 @@
 		<property name="maxInMemorySize" value="100000000" />
 	</bean>
 
-	<bean name="uploadPath" class="java.lang.String">
-		<constructor-arg
-			value="C:\Graduation\Shalendar_Server\Shalendar_Server\src\main\resources\files\calendarImage">
-		</constructor-arg>
-	</bean>
 
 	<!-- 객체 생성시 자바는 무조건 생성자를 호출하게 되어있다. -->
 	<bean id="myBatis" class="org.mybatis.spring.SqlSessionTemplate">
@@ -35,11 +36,10 @@
 
 	<!-- db연결 설정, 1) driver, 2) url, 3) username, 4) password -->
 	<bean id="dbcp" class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName"
-			value="com.mysql.jdbc.Driver"></property>
-		<property name="url" value="jdbc:mysql://localhost:3306/mind"></property>
-		<property name="username" value="MIND"></property>
-		<property name="password" value="mind"></property>
+		<property name="driverClassName" value="${jdbc.driver}"></property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
 	</bean>
 
 
