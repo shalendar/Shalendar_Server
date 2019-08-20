@@ -9,26 +9,24 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.co.MIND.calendar.CalendarDTO;
 
 public interface CalendarService {
-	// Ķ���� ����
+	// 캘占쏙옙占쏙옙 占쏙옙占쏙옙
 	public void createCalendar(CalendarDTO dto);
+
 	public void createCalendarImage(byte[] image,CalendarDTO dto);
 	
-	// Ķ���� ���
-
-	// Ķ���� ����
 
 	public void deleteCalendar(CalendarDTO dto);
 
-	// Ķ���� ����
+	// 캘占쏙옙占쏙옙 占쏙옙占쏙옙
 	public void updateCalendar(CalendarDTO dto);
 
-	// Ķ���� ��ȸ (cid)
+	// 캘占쏙옙占쏙옙 占쏙옙회 (cid)
 	public CalendarDTO readCalendar(CalendarDTO dto);
 
-	// Ķ���� ��ü ��ȸ
+	// 캘占쏙옙占쏙옙 占쏙옙체 占쏙옙회
 	public CalendarDTO readAllCalendar(CalendarDTO dto);
 	public CalendarDTO getCalInfo(CalendarDTO dto);
 	
-	//���� ��ε� ����
+	//占쏙옙占쏙옙 占쏙옙琯占� 占쏙옙占쏙옙
 	public String upload(MultipartFile file) throws IOException;
 }
