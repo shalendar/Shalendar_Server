@@ -20,5 +20,7 @@ public interface ShareListService {
 		
 		public int numOfUser(ShareListDTO dto);
 		
+		public void deleteShareUser(ShareListDTO dto);
+		
 		
 }

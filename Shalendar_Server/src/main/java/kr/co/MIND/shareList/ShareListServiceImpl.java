@@ -49,6 +49,14 @@ public class ShareListServiceImpl implements ShareListService {
 		return shareListDao.numOfUser(dto);
 	}
 
+	@Override
+	public void deleteShareUser(ShareListDTO dto) {
+		// TODO Auto-generated method stub
+		shareListDao.deleteShareUser(dto);
+		return;
+		
+	}
+
 	
 	
 	
