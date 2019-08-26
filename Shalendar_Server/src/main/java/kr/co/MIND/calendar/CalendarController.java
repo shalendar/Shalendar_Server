@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.MIND.shareList.ShareListDTO;
 import kr.co.MIND.member.JwtService;
 import kr.co.MIND.member.MemberDTO;
 import kr.co.MIND.member.MemberService;
@@ -44,7 +45,7 @@ public class CalendarController {
 	S3Util s3 = new S3Util();
 	private String bucketName = "shalendarmind";
 	
-	// °øÀ¯´Þ·Â »ý¼º
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Þ·ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@ResponseBody
 	@RequestMapping(value = "/createCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST, consumes = {
 			"multipart/form-data" })
@@ -71,7 +72,7 @@ public class CalendarController {
 //			byte[ ] fileData = file.getBytes();	
 //			System.out.println(file.getContentType());
 
-			// ShareList¿¡µµ °øÀ¯´Þ·Â »ý¼ºÀÚ°¡ ÀÚµ¿À¸·Î Ãß°¡µÇ¾î¾ß ÇÑ´Ù.
+			// ShareListï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Þ·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ç¾ï¿½ï¿½ ï¿½Ñ´ï¿½.
 			ShareListDTO dto = new ShareListDTO();
 			CalendarDTO result = calendarService.readCalendar(CalendarDTO);
 
@@ -91,7 +92,7 @@ public class CalendarController {
 		return map;
 	}
 
-	// °øÀ¯´Þ·Â »èÁ¦
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Þ·ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@ResponseBody
 	@RequestMapping(value = "/deleteCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
 	public Map<String, Object> deleteCalendar(@RequestBody CalendarDTO CalendarDTO) {
@@ -99,6 +100,10 @@ public class CalendarController {
 		try {
 			CalendarDTO.setId(jwtService.getUserID());
 			calendarService.deleteCalendar(CalendarDTO);
+			ShareListDTO shDto = new ShareListDTO();
+			shDto.setCid(CalendarDTO.getCid());
+			shDto.setId(CalendarDTO.getId());
+			shareListService.deleteShareUser(shDto);
 			map.put("message", "success");
 		} catch (RuntimeException e) {
 			System.out.println(e);
@@ -107,7 +112,7 @@ public class CalendarController {
 		return map;
 	}
 
-	// °øÀ¯´Þ·Â ¼öÁ¤
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Þ·ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@ResponseBody
 	@RequestMapping(value = "/updateCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST, consumes = {
 			"multipart/form-data" })
@@ -140,9 +145,9 @@ public class CalendarController {
 		return map;
 	}
 
-	// °øÀ¯´Þ·Â Á¶È¸(»çÀÌµå¹Ù ´Þ·Âµé º¸¿©ÁÖ±â)
-	// ÇØ´ç »ç¿ëÀÚ°¡ °¡Áö°í ÀÖ´Â ´Þ·Âµé Á¶È¸ (cid,calName,img_url,»ç¿ëÀÚµé)
-	// »ç¿ëÀÚµé Á¤º¸µµ º¸³»ÁÙ °Í
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Þ·ï¿½ ï¿½ï¿½È¸(ï¿½ï¿½ï¿½Ìµï¿½ï¿½ ï¿½Þ·Âµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½)
+	// ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Þ·Âµï¿½ ï¿½ï¿½È¸ (cid,calName,img_url,ï¿½ï¿½ï¿½ï¿½Úµï¿½)
+	// ï¿½ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 	@ResponseBody
 	@RequestMapping(value = "/readAllCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
 	public Map<String, Object> readAllCalendar(@RequestBody CalendarDTO CalendarDTO) throws Exception {

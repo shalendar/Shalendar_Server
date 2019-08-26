@@ -69,8 +69,8 @@ public class MemberController {
 	@RequestMapping(value="/signin",produces="application/json;charset=UTF-8",method=RequestMethod.POST)
 	public JSONObject login(@RequestBody MemberDTO dto,HttpServletResponse response) {
 		JSONObject json = new JSONObject();
-		boolean result = memberService.loginCheck(dto,response);
-		if(result) {
+		MemberDTO result = memberService.loginCheck(dto,response);
+		if(result!=null) {
 
 			String token = jwt.create("userID",dto, "User");
 			System.out.println(token);
@@ -82,6 +82,8 @@ public class MemberController {
 			if(jwt.isUsable(token)) {
 				json.put("message","login success");
 				json.put("token", token);
+				json.put("userName", result.getUserName());
+				json.put("img_url", result.getImg_url());
 				System.out.println(json);
 			}
 			return json;
@@ -98,6 +100,8 @@ public class MemberController {
 	@RequestMapping(value = "/imageChange", produces = "application/json;charset=UTF-8", method = RequestMethod.POST, consumes = {
 	"multipart/form-data" })
 	public JSONObject imageChange(MultipartFile file) {
+		if(file==null) System.out.println("@@@@@@@@@@@");
+		System.out.println("file@@"+file);
 		JSONObject json = new JSONObject();
 		MemberDTO dto = new MemberDTO();
 		try {

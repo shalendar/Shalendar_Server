@@ -16,4 +16,6 @@ public interface ShareListDAO {
 	
 	public int numOfUser(ShareListDTO dto);
 	
+	public void deleteShareUser(ShareListDTO dto);
+	
 }

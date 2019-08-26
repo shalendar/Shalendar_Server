@@ -25,12 +25,12 @@ public class MemberServiceImpl implements MemberService {
 	ShareListDAO shareListDao;
 
 	//01. ȸ�� �α��� üũ 
-	public boolean loginCheck(MemberDTO dto,HttpServletResponse response) {
+	public MemberDTO loginCheck(MemberDTO dto,HttpServletResponse response) {
 		MemberDTO dto2 = memberDao.viewMember(dto);
 		if(dto2!=null) {
-			return true;
+			return dto2;
 		}else {
-			return false;
+			return null;
 		}
 
 	}
