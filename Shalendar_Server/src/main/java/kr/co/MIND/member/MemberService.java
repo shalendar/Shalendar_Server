@@ -22,4 +22,5 @@ public interface MemberService {
 	public String invite(String id);
 	
 	public List<MemberDTO> readMemCal(ShareListDTO dto);
+	public void setDeviceToken(MemberDTO dto);
 }
