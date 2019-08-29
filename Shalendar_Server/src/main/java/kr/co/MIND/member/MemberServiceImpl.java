@@ -90,4 +90,12 @@ public class MemberServiceImpl implements MemberService {
 		// TODO Auto-generated method stub
 		return memberDao.invite(id);
 	}
+
+	@Override
+	public void setDeviceToken(MemberDTO dto) {
+		// TODO Auto-generated method stub
+		memberDao.setDeviceToken(dto);
+		return;
+		
+	}
 }

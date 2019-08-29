@@ -38,12 +38,15 @@ public class MemberController {
 	@RequestMapping(value="/emailCheck",produces="application/json;charset=UTF-8", method=RequestMethod.POST)
 	public JSONObject emailCheck(@RequestBody MemberDTO memberDTO) {
 		JSONObject json = new JSONObject();
+		MemberDTO tempDto=memberService.emailCheck(memberDTO);
 		
-		
-		if(memberService.emailCheck(memberDTO)==null) {
+		if(tempDto==null) {
 			json.put("message", "available");
 		}else {
 			json.put("message", "please check email");
+			json.put("id", tempDto.getId());
+			json.put("img_url", tempDto.getImg_url());
+			
 		}
 
 		return json;
@@ -71,7 +74,8 @@ public class MemberController {
 		JSONObject json = new JSONObject();
 		MemberDTO result = memberService.loginCheck(dto,response);
 		if(result!=null) {
-
+			
+			memberService.setDeviceToken(dto);
 			String token = jwt.create("userID",dto, "User");
 			System.out.println(token);
 			response.setHeader("Authorization", token);

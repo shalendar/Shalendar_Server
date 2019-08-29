@@ -65,4 +65,12 @@ public class MemberDAOImpl implements MemberDAO{
 		return mybatis.selectOne("member.invite",id);
 		
 	}
+
+	@Override
+	public void setDeviceToken(MemberDTO dto) {
+		// TODO Auto-generated method stub
+		mybatis.selectOne("member.setDeviceToken",dto);
+		return;
+		
+	}
 }
