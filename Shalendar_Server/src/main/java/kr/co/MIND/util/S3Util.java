@@ -3,23 +3,24 @@ package kr.co.MIND.util;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.GenericXmlApplicationContext;
-import org.springframework.core.env.ConfigurableEnvironment;
+
+
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.Protocol;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
+
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+
 
 import kr.co.MIND.config.keyProperties;
 
@@ -28,57 +29,59 @@ public class S3Util {
 
 	static keyProperties key = new keyProperties();
 	
-    String accessKey=key.getACCESSKEY(); // ¿¢¼¼½º Å°
+    String accessKey=key.getACCESSKEY(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å°
 	
 	String secretKey = key.getSECRETKEY();
+
 	private AmazonS3 conn;
 
-	public S3Util() {
-		AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
+	public S3Util()  {
+		
+		AWSCredentials credentials = new BasicAWSCredentials(accessKey,secretKey);
 		ClientConfiguration clientConfig = new ClientConfiguration();
 		clientConfig.setProtocol(Protocol.HTTP);
 		this.conn = new AmazonS3Client(credentials, clientConfig);
-		conn.setEndpoint("s3.ap-northeast-2.amazonaws.com"); // ¿£µåÆ÷ÀÎÆ® ¼³Á¤ [ ¾Æ½Ã¾Æ ÅÂÆò¾ç ¼­¿ï ]
+		conn.setEndpoint("s3.ap-northeast-2.amazonaws.com"); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ [ ï¿½Æ½Ã¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ]
 	}
 
-	// ¹öÅ¶ ¸®½ºÆ®¸¦ °¡Á®¿À´Â ¸Þ¼­µåÀÌ´Ù.
+	// ï¿½ï¿½Å¶ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ï¿½Ì´ï¿½.
 	public List<Bucket> getBucketList() {
 		return conn.listBuckets();
 	}
 
-	// ¹öÅ¶À» »ý¼ºÇÏ´Â ¸Þ¼­µåÀÌ´Ù.
+	// ï¿½ï¿½Å¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ï¿½Ì´ï¿½.
 	public Bucket createBucket(String bucketName) {
 		return conn.createBucket(bucketName);
 	}
 
-	// Æú´õ »ý¼º (Æú´õ´Â ÆÄÀÏ¸í µÚ¿¡ "/"¸¦ ºÙ¿©¾ßÇÑ´Ù.)
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½Ú¿ï¿½ "/"ï¿½ï¿½ ï¿½Ù¿ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.)
 	public void createFolder(String bucketName, String folderName) {
 		conn.putObject(bucketName, folderName + "/", new ByteArrayInputStream(new byte[0]), new ObjectMetadata());
 	}
 
-	// ÆÄÀÏ ¾÷·Îµå
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½
 	public void fileUpload(String bucketName, String fileName, byte[] fileData) throws FileNotFoundException {
 
-		String filePath = (fileName).replace(File.separatorChar, '/'); // ÆÄÀÏ ±¸º°ÀÚ¸¦ `/`·Î ¼³Á¤(\->/) ÀÌ°Ô ±âÁ¸¿¡ / ¿´¾îµµ ³Ñ¾î¿À¸é¼­ \·Î ¹Ù²î´Â °Å°°´Ù.
+		String filePath = (fileName).replace(File.separatorChar, '/'); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½ `/`ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(\->/) ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ / ï¿½ï¿½ï¿½îµµ ï¿½Ñ¾ï¿½ï¿½ï¿½é¼­ \ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½ ï¿½Å°ï¿½ï¿½ï¿½.
 		ObjectMetadata metaData = new ObjectMetadata();
 
-		metaData.setContentLength(fileData.length);   //¸ÞÅ¸µ¥ÀÌÅÍ ¼³Á¤ -->¿ø·¡´Â 128kB±îÁö ¾÷·Îµå °¡´ÉÇßÀ¸³ª ÆÄÀÏÅ©±â¸¸Å­ ¹öÆÛ¸¦ ¼³Á¤½ÃÄ×´Ù.
-	    ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(fileData); //ÆÄÀÏ ³ÖÀ½
+		metaData.setContentLength(fileData.length);   //ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ -->ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 128kBï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å©ï¿½â¸¸Å­ ï¿½ï¿½ï¿½Û¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´ï¿½.
+		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(fileData); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 		conn.putObject(bucketName, filePath, byteArrayInputStream, metaData);
 
 	}
 
-	// ÆÄÀÏ »èÁ¦
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void fileDelete(String bucketName, String fileName) {
 		String imgName = (fileName).replace(File.separatorChar, '/');
 		conn.deleteObject(bucketName, imgName);
-		System.out.println("»èÁ¦¼º°ø");
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 	}
 
-	// ÆÄÀÏ URL
+	// ï¿½ï¿½ï¿½ï¿½ URL
 	public String getFileURL(String bucketName, String fileName) {
-		System.out.println("³Ñ¾î¿À´Â ÆÄÀÏ¸í : "+fileName);
+		System.out.println("ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¸ï¿½ : "+fileName);
 		String imgName = "https://shalendarmind.s3.ap-northeast-2.amazonaws.com/"+fileName.replace(File.separatorChar, '/');
 		System.out.println(imgName);
 		return imgName;
