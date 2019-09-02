@@ -37,6 +37,20 @@ public class ShareListDAOImpl implements ShareListDAO{
 		return mybatis.selectOne("shareList.userCheck", dto);
 	}
 
+	@Override
+	public int numOfUser(ShareListDTO dto) {
+		// TODO Auto-generated method stub
+		return mybatis.selectOne("shareList.numOfUser",dto);
+	}
+
+	@Override
+	public void deleteShareUser(ShareListDTO dto) {
+		// TODO Auto-generated method stub
+		mybatis.selectOne("shareList.deleteUser",dto);
+		
+		
+	}
+
 
 	
 	

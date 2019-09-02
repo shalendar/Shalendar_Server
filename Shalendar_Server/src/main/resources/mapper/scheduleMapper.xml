@@ -1,34 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="schedule">
+	<!-- 해당 일정 numOfComments 초기화-->
+	<update id="updateNumOfComments" parameterType="java.util.List">
+		update schedule set
+		numOfComments = #{numOfComments}
+		where sid=#{sid}
 	
+	</update>
 	<!-- 일정 검색  -->
 	<select id="searchSche" parameterType = "sdto" resultMap = "scheMap">
-		select * from schedule where id=#{id} and title like '%'||#{title}||'%'
+		select * from schedule where id=#{id} and title like concat ('%',#{title},'%')
 	</select>
 
 	<!-- @@@@@@@@@@@@@@@cid, sid 부여 생각해봐야된다.@@@@@@@@@@@@@@@@@-->
 	<!-- 전체 일정 보내 주기 -->
 	<select id = "showAllSche" parameterType = "int" resultMap = "scheMap">
-		select * from schedule where cid = #{cid}
+		select * from schedule where cid = #{cid} order by startDate
 	</select>
 	
 	<!-- 상세 일정 보내 주기 --> 
 	<select id = "showSche" parameterType = "int" resultMap = "scheMap">
-		select * from schedule where sid = #{sid}
+		select * from schedule where sid = #{sid} 
 	</select>
 	
 	<!-- 스케줄 생성 -->
 	<!-- must match cid -->
 	<insert id="createSche" parameterType = "sdto">
-		insert into schedule (cid,title,sContent,startDate,startTime,endDate,endTime,area,id)
-		values (#{cid},#{title},#{sContent},#{startDate},#{startTime},#{endDate},#{endTime},#{area},#{id})
+		insert into schedule (id,cid,title,sContent,startDate,endDate,area)
+		values (#{id},#{cid},#{title},#{sContent},#{startDate},#{endDate},#{area})
 	</insert>
 	<!-- 스케줄 수정 -->
 	<update id="updateSche" parameterType="sdto">
 		update schedule set
-		title=#{title},sContent=#{sContent},startDate=#{startDate},startTime=#{startTime},
-		endDate=#{endDate},endTime=#{endTime},area=#{area}
+		title=#{title},sContent=#{sContent},startDate=#{startDate},
+		endDate=#{endDate},area=#{area}
 		where sid = #{sid}
 		<!-- update calendar set
 		calName=#{updateCalName},calContent=#{calContent},img_url=#{img_url}
@@ -49,10 +55,9 @@
 		<result property="title" column="title" />
 		<result property="sContent" column="sContent" />
 		<result property="startDate" column="startDate" />
-		<result property="startTime" column="startTime" />
 		<result property="endDate" column="endDate" />
-		<result property="endTime" column="endTime" />
 		<result property="area" column="area" />
+		<result property="numOfComments" column="numOfComments"/>
 	</resultMap>
 
 </mapper>

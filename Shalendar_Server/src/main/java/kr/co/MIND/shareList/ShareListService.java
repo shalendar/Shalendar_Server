@@ -5,18 +5,22 @@ import java.util.List;
 import kr.co.MIND.shareList.ShareListDTO;
 
 public interface ShareListService {
-	// Ä¶¸°´õ »ç¿ëÀÚ Á¶È¸
+	// Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¸
 		public List<ShareListDTO> readUserCal(ShareListDTO dto);
 
-		// Ä¶¸°´õ »ç¿ëÀÚ Ãß°¡
+		// Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
 		public void addUserCal(ShareListDTO dto);
 		
-		// ÇÏ³ªÀÇ Ä¶¸°´õ »ç¿ëÀÚµé Á¶È¸(id°ª È®ÀÎ)
+		// ï¿½Ï³ï¿½ï¿½ï¿½ Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½È¸(idï¿½ï¿½ È®ï¿½ï¿½)
 		public List<ShareListDTO> readUserAllCal(ShareListDTO dto);
 		
 		
 		
 		public ShareListDTO userCheck(ShareListDTO dto);
+		
+		public int numOfUser(ShareListDTO dto);
+		
+		public void deleteShareUser(ShareListDTO dto);
 		
 		
 }

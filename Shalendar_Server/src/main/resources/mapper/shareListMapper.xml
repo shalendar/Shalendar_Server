@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="shareList">
+
+	<!-- 공유달력 삭제 -->
+	<!-- 삭제할 달력의 이름과 달력 생성시 만든 사용자의 id를 같이 보내야 한다 -->
+	<delete id="deleteUser" parameterType="sharedto">
+		delete from shareList where id=#{id} and cid=#{cid}
+	</delete>
+	
+	<!-- 한캘린더의 사용자 수 조회-->
+	<select id = "numOfUser" resultType="Integer">
+		select count(id) from shareList where cid=#{cid}
+	</select>
 	
 	<!-- 캘린더하나에 여러 사용자 조회 -->
 	<select id="readUserCal" resultMap="smap">

@@ -2,6 +2,9 @@
 # Created by https://www.gitignore.io/api/java,macos,windows
 # Edit at https://www.gitignore.io/?templates=java,macos,windows
 
+/Shalendar_Server/src/main/java/kr/co/MIND/config/
+/Shalendar_Server/src/main/resources/files/
+
 ### Java ###
 # Compiled class file
 *.class

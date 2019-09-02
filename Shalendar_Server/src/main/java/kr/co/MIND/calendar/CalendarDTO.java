@@ -1,11 +1,11 @@
 package kr.co.MIND.calendar;
 
+
 public class CalendarDTO {
 	private String id;
 	private String cid;
 	private String calName;
 	private String calContent;
-	private int userCount;
 	private String img_url;
 
 	public String getId() {
@@ -32,18 +32,14 @@ public class CalendarDTO {
 	public void setCalContent(String calContent) {
 		this.calContent = calContent;
 	}
-	public int getUserCount() {
-		return userCount;
-	}
-	public void setUserCount(int userCount) {
-		this.userCount = userCount;
-	}
+	
 	public String getImg_url() {
 		return img_url;
 	}
 	public void setImg_url(String img_url) {
 		this.img_url = img_url;
 	}
+	
 	
 	
 	

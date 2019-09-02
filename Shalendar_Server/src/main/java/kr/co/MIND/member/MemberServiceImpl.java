@@ -17,34 +17,34 @@ import kr.co.MIND.shareList.ShareListDTO;
 
 @Service("MemberService")
 public class MemberServiceImpl implements MemberService {
-	
+
 	@Inject
 	MemberDAO memberDao;
-	
+
 	@Inject
 	ShareListDAO shareListDao;
-	
+
 	//01. È¸ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ Ã¼Å© 
-	public boolean loginCheck(MemberDTO dto,HttpServletResponse response) {
+	public MemberDTO loginCheck(MemberDTO dto,HttpServletResponse response) {
 		MemberDTO dto2 = memberDao.viewMember(dto);
 		if(dto2!=null) {
-			return true;
+			return dto2;
 		}else {
-			return false;
+			return null;
 		}
 
 	}
-	
+
 	@Override
 	public MemberDTO viewMember(MemberDTO dto) {
 		return memberDao.viewMember(dto);
 	}
-	
+
 	@Override
 	public void logout(HttpSession session) {
 		session.invalidate();
 	}
-	
+
 	@Override
 	public void joinMember(MemberDTO dto) {
 		memberDao.joinMember(dto);
@@ -52,7 +52,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public boolean joinCheck(MemberDTO dto) {
 		return memberDao.joinCheck(dto);
-		
+
 	}
 
 	@Override
@@ -65,17 +65,37 @@ public class MemberServiceImpl implements MemberService {
 	public MemberDTO profile(MemberDTO dto) {
 		return memberDao.profile(dto);
 	}
-	
-	//ÇÑ°³ÀÇ cid¿¡ ´ëÇÑ »ç¿ëÀÚ id µé
-		@Override
-		public List<MemberDTO> readMemCal(ShareListDTO dto) {
-			List<ShareListDTO> result = shareListDao.readUserCal(dto);
-			List<MemberDTO> mResult = new ArrayList<MemberDTO>();
-			MemberDTO mdto = new MemberDTO();
-			for(ShareListDTO object:result) {
-				mdto.setId(object.getId());
-				mResult.add(memberDao.profile(mdto));
-			}
-			return mResult;
+
+	//ï¿½Ñ°ï¿½ï¿½ï¿½ cidï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ id ï¿½ï¿½
+	@Override
+	public List<MemberDTO> readMemCal(ShareListDTO dto) {
+		List<ShareListDTO> result = shareListDao.readUserCal(dto);
+		List<MemberDTO> mResult = new ArrayList<MemberDTO>();
+		MemberDTO mdto = new MemberDTO();
+		for(ShareListDTO object:result) {
+			mdto.setId(object.getId());
+			mResult.add(memberDao.profile(mdto));
 		}
+		return mResult;
+	}
+
+	@Override
+	public MemberDTO emailCheck(MemberDTO dto) {
+		// TODO Auto-generated method stub
+		return memberDao.select(dto);
+	}
+
+	@Override
+	public String invite(String id) {
+		// TODO Auto-generated method stub
+		return memberDao.invite(id);
+	}
+
+	@Override
+	public void setDeviceToken(MemberDTO dto) {
+		// TODO Auto-generated method stub
+		memberDao.setDeviceToken(dto);
+		return;
+		
+	}
 }

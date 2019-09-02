@@ -7,16 +7,23 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import kr.co.MIND.shareList.ShareListDTO;
 import kr.co.MIND.member.JwtService;
 import kr.co.MIND.member.MemberDTO;
 import kr.co.MIND.member.MemberService;
 import kr.co.MIND.shareList.*;
+import kr.co.MIND.util.S3Util;
+import kr.co.MIND.util.UploadFileUtils;
 
 @Controller
 @RequestMapping
@@ -27,39 +34,65 @@ public class CalendarController {
 
 	@Inject
 	CalendarService calendarService;
-	
+
 	@Inject
 	MemberService memberService;
 
 	@Inject
 	JwtService jwtService;
 
-	// °øÀ¯´Þ·Â »ý¼º
+	
+	S3Util s3 = new S3Util();
+	private String bucketName = "shalendarmind";
+	
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Þ·ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@ResponseBody
-	@RequestMapping(value = "/createCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-	public Map<String, Object> createCalendar(@RequestBody CalendarDTO CalendarDTO) {
+	@RequestMapping(value = "/createCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST, consumes = {
+			"multipart/form-data" })
+	public Map<String, Object> createCalendar(MultipartFile file, String calName, String calContent) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		CalendarDTO CalendarDTO = new CalendarDTO();
+
 		try {
-			CalendarDTO.setId(jwtService.getUserID());
-			calendarService.createCalendar(CalendarDTO);
 			
-			// ShareList¿¡µµ °øÀ¯´Þ·Â »ý¼ºÀÚ°¡ ÀÚµ¿À¸·Î Ãß°¡µÇ¾î¾ß ÇÑ´Ù.
+			String uploadpath = "calendarImage";
+			ResponseEntity<String> img_path = new ResponseEntity<>(
+					UploadFileUtils.uploadFile(uploadpath, file.getOriginalFilename(), file.getBytes()),
+					HttpStatus.CREATED);
+			String img_url = (String) img_path.getBody();
+			System.out.println(img_url);
+			String url = s3.getFileURL(bucketName, uploadpath+img_url);
+			
+			CalendarDTO.setId(jwtService.getUserID());
+//			String url = calendarService.upload(file);
+			CalendarDTO.setImg_url(url);
+			CalendarDTO.setCalName(calName);
+			CalendarDTO.setCalContent(calContent);
+			calendarService.createCalendar(CalendarDTO);
+//			byte[ ] fileData = file.getBytes();	
+//			System.out.println(file.getContentType());
+
+			// ShareListï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Þ·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ç¾ï¿½ï¿½ ï¿½Ñ´ï¿½.
 			ShareListDTO dto = new ShareListDTO();
 			CalendarDTO result = calendarService.readCalendar(CalendarDTO);
+
 			System.out.println(result.getCid());
 			dto.setId(result.getId());
 			dto.setCid(result.getCid());
 			shareListService.addUserCal(dto);
 
+//			calendarService.createCalendarImage(fileData,result);
 			map.put("message", "success");
 		} catch (RuntimeException e) {
 			System.out.println(e);
 			map.put("message", "fail");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return map;
 	}
 
-	// °øÀ¯´Þ·Â »èÁ¦
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Þ·ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@ResponseBody
 	@RequestMapping(value = "/deleteCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
 	public Map<String, Object> deleteCalendar(@RequestBody CalendarDTO CalendarDTO) {
@@ -67,6 +100,10 @@ public class CalendarController {
 		try {
 			CalendarDTO.setId(jwtService.getUserID());
 			calendarService.deleteCalendar(CalendarDTO);
+			ShareListDTO shDto = new ShareListDTO();
+			shDto.setCid(CalendarDTO.getCid());
+			shDto.setId(CalendarDTO.getId());
+			shareListService.deleteShareUser(shDto);
 			map.put("message", "success");
 		} catch (RuntimeException e) {
 			System.out.println(e);
@@ -75,55 +112,73 @@ public class CalendarController {
 		return map;
 	}
 
-	// °øÀ¯´Þ·Â ¼öÁ¤
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Þ·ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@ResponseBody
-	@RequestMapping(value = "/updateCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-	public Map<String, Object> updateCalendar(@RequestBody CalendarDTO CalendarDTO) {
+	@RequestMapping(value = "/updateCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST, consumes = {
+			"multipart/form-data" })
+	public Map<String, Object> updateCalendar(MultipartFile file, String cid, String calName, String calContent) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		CalendarDTO CalendarDTO = new CalendarDTO();
 		try {
+			String uploadpath = "calendarImage";
+			ResponseEntity<String> img_path = new ResponseEntity<>(
+					UploadFileUtils.uploadFile(uploadpath, file.getOriginalFilename(), file.getBytes()),
+					HttpStatus.CREATED);
+			String img_url = (String) img_path.getBody();
+			
+			String url = s3.getFileURL(bucketName, uploadpath+img_url);
+
 			CalendarDTO.setId(jwtService.getUserID());
+			CalendarDTO.setCid(cid);
+			CalendarDTO.setCalName(calName);
+			CalendarDTO.setCalContent(calContent);
+			CalendarDTO.setImg_url(url);
+
 			calendarService.updateCalendar(CalendarDTO);
 			map.put("message", "success");
 		} catch (RuntimeException e) {
 			System.out.println(e);
 			map.put("message", "fail");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return map;
 	}
 
-	
-	// °øÀ¯´Þ·Â Á¶È¸(»çÀÌµå¹Ù ´Þ·Âµé º¸¿©ÁÖ±â)
-	// ÇØ´ç »ç¿ëÀÚ°¡ °¡Áö°í ÀÖ´Â ´Þ·Âµé Á¶È¸ (cid,calName,img_url,»ç¿ëÀÚµé)
-	// »ç¿ëÀÚµé Á¤º¸µµ º¸³»ÁÙ °Í
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Þ·ï¿½ ï¿½ï¿½È¸(ï¿½ï¿½ï¿½Ìµï¿½ï¿½ ï¿½Þ·Âµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½)
+	// ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Þ·Âµï¿½ ï¿½ï¿½È¸ (cid,calName,img_url,ï¿½ï¿½ï¿½ï¿½Úµï¿½)
+	// ï¿½ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 	@ResponseBody
 	@RequestMapping(value = "/readAllCal", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-	public Map<String, Object> readAllCalendar(@RequestBody CalendarDTO CalendarDTO) {
+	public Map<String, Object> readAllCalendar(@RequestBody CalendarDTO CalendarDTO) throws Exception {
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
+			
 			ShareListDTO dto = new ShareListDTO();
 			dto.setId(jwtService.getUserID());
-			List<ShareListDTO> resultCid = shareListService.readUserAllCal(dto); 
+			List<ShareListDTO> resultCid = shareListService.readUserAllCal(dto);
 			List<List<MemberDTO>> profile = new ArrayList<List<MemberDTO>>();
 			List<CalendarDTO> result = new ArrayList<CalendarDTO>();
 //			List<MemberDTO> profile = new ArrayList<MemberDTO>();
 			CalendarDTO temp = new CalendarDTO();
 			MemberDTO mTemp = new MemberDTO();
-			int i=0;
-			for(ShareListDTO object:resultCid) {
+			int i = 0;
+			for (ShareListDTO object : resultCid) {
 				temp.setCid(object.getCid());
 				mTemp.setId(object.getId());
 				result.add(calendarService.readAllCalendar(temp));
 				profile.add(memberService.readMemCal(object));
 			}
 //			profile.add(memberService.profile(dto))
-			if(!result.isEmpty()) {
+			if (!result.isEmpty()) {
 				map.put("data", result);
 				map.put("data2", profile);
 				map.put("message", "success");
-			}else {
+			} else {
 				map.put("message", "fail");
 			}
-			
+
 		} catch (RuntimeException e) {
 			System.out.println(e);
 			map.put("message", "fail");

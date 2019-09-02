@@ -1,56 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
+	<!-- deviceToken -->
+	<update id="setDeviceToken" parameterType="mdto">
+		update user set deviceToken = #{deviceToken} where id = #{id}
+	</update>
 
-	<!-- img_url 변경-->
-	<update id="updateImg_url" parameterType = "mdto">
+	<!-- img_url 변경 -->
+	<update id="updateImg_url" parameterType="mdto">
 		update user set img_url = #{img_url} where id = #{id}
 	</update>
-	
+
 	<!-- 캘린더 사용자 추가 -->
-	<select id ="addUser_Calendar" resultType="String">
-		select userName
-		from user
-		where id = #{id}
+	<select id="addUser_Calendar" resultType="String">
+		select userName from user where id = #{id}
 	</select>
-	
+
 	<select id="loginIDCheck" resultType="String">
-		select userName from user
-		where id = #{id} 
+		select userName from user where id = #{id}
 	</select>
 	<select id="loginPWCheck" resultType="String">
-		select userName from user
-		where pw=#{pw}
+		select userName from user where pw=#{pw}
 	</select>
-	<select id ="viewMember" resultType="mdto">
-		select userName,id,pw
-		from user
-		where id = #{id} and pw=#{pw}
+	<select id="viewMember" resultType="mdto">
+		select userName,id,pw,img_url from user where id = #{id} and pw=#{pw}
+	</select>
+
+	<!-- 사용자 초대 전 Push 알림 -->
+	<select id="invite" resultType="String">
+		select deviceToken from user where id = #{id}
+	</select>
+
+
+	<select id="select" parameterType="mdto" resultMap="resMap">
+		select id,userName,img_url from user where id = #{id}
 	</select>
 	
-	<select id="select" parameterType="mdto" resultMap="resMap">
-		select * from user where id = #{id}
-	</select>
 	<select id="selectAll" resultMap="resMap">
 		select * from user
 	</select>
-	<resultMap type="mdto" id="resMap">
-		<result property="id" column="id"/>
-		<result property="pw" column="pw"/>
-		<result property="userName" column="userName"/>
-		<result property="img_url" column="img_url"/>
-	</resultMap>
-	
-	<insert id="joinMember">
-		insert into user values (#{id}, #{pw}, #{userName},#{img_url})
+
+	<insert id="joinMember" parameterType="mdto">
+		insert into user values (#{id}, #{pw},#{userName},#{img_url},#{deviceToken})
 	</insert>
 	<select id="joinCheck" resultType="String">
 		select * from user where id = #{id}
 	</select>
 	<update id="update" parameterType="mdto">
 		update user set pw = #{pw} where id = #{id}
-	</update>	
+	</update>
 	<delete id="delete" parameterType="mdto">
 		delete from user where pw = #{pw}
 	</delete>
+
+	<resultMap type="mdto" id="resMap">
+		<result property="id" column="id" />
+		<result property="pw" column="pw" />
+		<result property="userName" column="userName" />
+		<result property="img_url" column="img_url" />
+		<result property="deviceToken" column="deviceToken" />
+	</resultMap>
 </mapper>
