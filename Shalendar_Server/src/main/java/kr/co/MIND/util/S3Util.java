@@ -21,14 +21,18 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 
+
+import kr.co.MIND.config.keyProperties;
+
+
 public class S3Util {
 
-//	@Value("$s3Pro{s3.accessKey}")
-	private String accessKey="AKIAWREI3DMMHJTOK36L";
+	static keyProperties key = new keyProperties();
 	
-//	@Value("$s3Pro{s3.secretKey}")
-	private String secretKey="dECRqonDMnGItmWvbm2HagQceR5S/vFILChWybmj";
+    String accessKey=key.getACCESSKEY(); // ������ Ű
 	
+	String secretKey = key.getSECRETKEY();
+
 	private AmazonS3 conn;
 
 	public S3Util()  {
