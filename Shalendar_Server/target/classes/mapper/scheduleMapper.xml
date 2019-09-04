@@ -47,6 +47,12 @@
 		<!-- delete from calendar where calName = #{calName} and
 		id=#{id} -->
 	</delete>
+	
+	<!-- 상세 일정 보내 주기 --> 
+	<select id = "recommendSche03" resultMap = "scheMap">
+		select startDate,endDate from schedule where cid = #{cid} 
+	</select>
+	
 
 	<resultMap type="sdto" id="scheMap">
 		<result property="id" column="id" />
