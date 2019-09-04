@@ -1,6 +1,9 @@
 package kr.co.MIND.schedule;
 
+import java.text.ParseException;
 import java.util.List;
+
+import kr.co.MIND.shareList.ShareListDTO;
 
 public interface ScheduleService {
 	public List showAllSchedule(ScheduleDTO dto);
@@ -11,4 +14,5 @@ public interface ScheduleService {
 	public List searchSchedule(ScheduleDTO dto);
 	
 	public void updateNumOfComments(ScheduleDTO dto);
+	public List<String> recommendSche(ScheduleDTO dto) throws ParseException;
 }

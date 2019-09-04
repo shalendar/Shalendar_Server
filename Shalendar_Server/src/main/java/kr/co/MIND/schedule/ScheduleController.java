@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.co.MIND.member.JwtService;
 import kr.co.MIND.shareList.ShareListDTO;
 import kr.co.MIND.shareList.ShareListService;
+
+import java.text.ParseException;
 import java.util.List;
 
 @Controller
@@ -114,6 +116,22 @@ public class ScheduleController {
 		}else {
 			json.put("message", "no schedule");
 		}
+		return json;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/recommendSche",produces="application/json;charset=UTF-8", method=RequestMethod.POST)
+	public JSONObject recommendSche(@RequestBody ScheduleDTO dto) throws NumberFormatException, ParseException {
+		JSONObject json = new JSONObject();
+		List result = scheduleService.recommendSche(dto);
+		if(!result.isEmpty()) {
+			json.put("data", result);
+			json.put("message","success");
+			
+		}else {
+			json.put("message", "null");
+		}
+		
 		return json;
 	}
 }

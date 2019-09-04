@@ -10,5 +10,6 @@ public interface ScheduleDAO {
 	public List searchSchedule(ScheduleDTO dto);
 	
 	public void updateNumOfComments(ScheduleDTO dto);
+	public List<ScheduleDTO> recommendSche03(int dto);
 	
 }

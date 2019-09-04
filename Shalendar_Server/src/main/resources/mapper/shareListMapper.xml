@@ -33,6 +33,16 @@
 		insert into shareList (cid,id) values (#{cid},#{id})
 	</insert>
 	
+	<!-- 추천알고리즘1 -->
+	<select id = "recommendSche01" resultType="String">
+		select id from shareList where cid=#{cid}
+	</select>
+	
+	<!-- 추천알고리즘2 -->
+	<select id = "recommendSche02" resultType="int">
+		select cid from shareList where id=#{id}
+	</select>
+	
 	
 	<resultMap type="sharedto" id="smap">
 		<result property="id" column="id"/>
