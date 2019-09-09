@@ -36,8 +36,8 @@ public class PostInvitation {
       
         JSONObject json = new JSONObject();
         JSONObject json2 = new JSONObject();
-        json2.put("title", userName+"珥덈��옣");
-        json2.put("text",calName+" 怨듭쑀 �떖�젰�뿉 珥덈��븯�뀲�뒿�땲�떎.");
+        json2.put("title", "From"+userName +" 님");
+        json2.put("text",calName+" 달력에 초대하셨습니다.");
         json2.put("sound", "default");
         
 //        json.put("to",deviceToken);
