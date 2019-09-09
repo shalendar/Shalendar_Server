@@ -3,6 +3,8 @@ package kr.co.MIND.schedule;
 import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
+import kr.co.MIND.member.MemberDAO;
+import kr.co.MIND.member.MemberDTO;
 import kr.co.MIND.shareList.ShareListDAO;
 import kr.co.MIND.shareList.ShareListDTO;
 
@@ -16,15 +18,25 @@ import java.util.List;
 public class ScheduleServiceImpl implements ScheduleService {
 	@Inject
 	ScheduleDAO scheduleDao;
+	
+	@Inject
+	MemberDAO memberDao;
 
 	@Inject
 	ShareListDAO sharelistDao;
 
 	@Override
-	public List showAllSchedule(ScheduleDTO dto) {
-		// TODO Auto-generated method stub
+	public List<ScheduleDTO> showAllSchedule(ScheduleDTO dto) {
+		List<ScheduleDTO> list = scheduleDao.showAllSchedule(dto);
+		for(ScheduleDTO object:list) {
+			MemberDTO temp = new MemberDTO();
+			temp.setId(object.getId());
+			String img = memberDao.select(temp).getImg_url();
+			object.setImg_url(img);
+		}
+		
 
-		return scheduleDao.showAllSchedule(dto);
+		return list;
 	}
 
 	@Override
@@ -49,8 +61,15 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 	@Override
 	public ScheduleDTO showSchedule(ScheduleDTO dto) {
-		// TODO Auto-generated method stub
-		return scheduleDao.showSchedule(dto);
+		ScheduleDTO result = new ScheduleDTO();
+		MemberDTO temp = new MemberDTO();
+		temp.setId(dto.getId());
+		String img = memberDao.select(temp).getImg_url();
+		
+		result = scheduleDao.showSchedule(dto);
+		result.setImg_url(img);
+		
+		return result;
 	}
 
 	@Override

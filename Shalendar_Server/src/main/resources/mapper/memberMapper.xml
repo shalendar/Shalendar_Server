@@ -52,6 +52,7 @@
 	<delete id="delete" parameterType="mdto">
 		delete from user where pw = #{pw}
 	</delete>
+	
 
 	<resultMap type="mdto" id="resMap">
 		<result property="id" column="id" />
