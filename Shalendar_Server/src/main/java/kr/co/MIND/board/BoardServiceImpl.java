@@ -48,6 +48,8 @@ public class BoardServiceImpl implements BoardService {
 			
 			String img = memberDao.select(temp).getImg_url();
 			user.setImg_url(img);
+			String name = memberDao.getUserName(user.getId());
+			user.setUserName(name);
 		}
 		return resultL;
 	}
