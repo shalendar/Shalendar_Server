@@ -47,7 +47,6 @@ public class ScheduleController {
 	@RequestMapping(value="/showSche",produces="application/json;charset=UTF-8", method=RequestMethod.POST)
 	public JSONObject showSche(@RequestBody ScheduleDTO dto) {
 		JSONObject json = new JSONObject();
-		dto.setId(jwtservice.getUserID());
 		ScheduleDTO result = scheduleService.showSchedule(dto);
 		if(result!=null) {
 			json.put("data", result);
