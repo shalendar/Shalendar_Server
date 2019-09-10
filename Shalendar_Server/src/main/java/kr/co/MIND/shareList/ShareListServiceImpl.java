@@ -24,7 +24,14 @@ public class ShareListServiceImpl implements ShareListService {
 
 	@Override
 	public List<ShareListDTO> readUserCal(ShareListDTO dto) {
-		return shareListDao.readUserCal(dto);
+		List<ShareListDTO> list = shareListDao.readUserCal(dto);
+		for(ShareListDTO object:list) {
+			MemberDTO temp = new MemberDTO();
+			temp.setId(object.getId());
+			String img = memberDao.select(temp).getImg_url();
+			object.setImg_url(img);
+		}
+		return list;
 	}
 
 	@Override
