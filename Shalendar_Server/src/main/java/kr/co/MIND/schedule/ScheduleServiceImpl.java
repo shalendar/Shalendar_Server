@@ -63,10 +63,10 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public ScheduleDTO showSchedule(ScheduleDTO dto) {
 		ScheduleDTO result = new ScheduleDTO();
 		MemberDTO temp = new MemberDTO();
-		temp.setId(dto.getId());
-		String img = memberDao.select(temp).getImg_url();
 		
 		result = scheduleDao.showSchedule(dto);
+		temp.setId(result.getId());
+		String img = memberDao.select(temp).getImg_url();
 		result.setImg_url(img);
 		
 		return result;
