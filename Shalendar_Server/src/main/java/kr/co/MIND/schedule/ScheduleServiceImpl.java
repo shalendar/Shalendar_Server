@@ -33,6 +33,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 			temp.setId(object.getId());
 			String img = memberDao.select(temp).getImg_url();
 			object.setImg_url(img);
+			String name = memberDao.getUserName(object.getId());
+			object.setUserName(name);
 		}
 		
 
@@ -68,6 +70,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 		temp.setId(result.getId());
 		String img = memberDao.select(temp).getImg_url();
 		result.setImg_url(img);
+		String name = memberDao.getUserName(result.getId());
+		result.setUserName(name);
 		
 		return result;
 	}
