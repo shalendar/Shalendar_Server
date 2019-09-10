@@ -98,4 +98,10 @@ public class MemberServiceImpl implements MemberService {
 		return;
 		
 	}
+
+	@Override
+	public String getUserName(String id) {
+		// TODO Auto-generated method stub
+		return memberDao.getUserName(id);
+	}
 }
