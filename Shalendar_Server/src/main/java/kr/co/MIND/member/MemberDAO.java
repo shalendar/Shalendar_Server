@@ -18,6 +18,8 @@ public interface MemberDAO {
 	public MemberDTO profile(MemberDTO dto);
 	public void setDeviceToken(MemberDTO dto);
 	
+	public String getUserName(String id);
+	
 	//사용자 초대 전 푸쉬 알림 
 	public String invite(String id);
 	
