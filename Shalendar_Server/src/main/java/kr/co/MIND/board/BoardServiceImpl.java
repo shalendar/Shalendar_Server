@@ -1,6 +1,7 @@
 package kr.co.MIND.board;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -8,7 +9,8 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import kr.co.MIND.calendar.CalendarDAOImpl;
-import kr.co.MIND.calendar.CalendarDTO;
+import kr.co.MIND.member.MemberDAO;
+import kr.co.MIND.member.MemberDTO;
 import kr.co.MIND.schedule.ScheduleDTO;
 
 @Service("BoardService")
@@ -16,6 +18,10 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Inject
 	BoardDAO boardDao;
+	
+	@Inject
+	MemberDAO memberDao;
+	
 
 	@Override
 	public void createComments(BoardDTO dto) {
@@ -34,7 +40,18 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<BoardDTO> readComments(BoardDTO dto) {
-		return boardDao.readComments(dto);
+		List<BoardDTO> resultL = new ArrayList<BoardDTO>();
+		resultL = boardDao.readComments(dto);
+		for(BoardDTO user: resultL) {
+			MemberDTO temp = new MemberDTO();
+			temp.setId(user.getId());
+			
+			String img = memberDao.select(temp).getImg_url();
+			user.setImg_url(img);
+			String name = memberDao.getUserName(user.getId());
+			user.setUserName(name);
+		}
+		return resultL;
 	}
 
 	@Override

@@ -73,4 +73,10 @@ public class MemberDAOImpl implements MemberDAO{
 		return;
 		
 	}
+
+	@Override
+	public String getUserName(String id) {
+		// TODO Auto-generated method stub
+		return mybatis.selectOne("member.loginIDCheck",id);
+	}
 }

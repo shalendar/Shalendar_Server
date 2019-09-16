@@ -11,6 +11,23 @@ public class ScheduleDTO {
 	private String startDate;
 	private String endDate;
 	private String area;
+	
+	private String img_url;
+	private String userName;
+	
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName=userName;
+	}
+	
+	public String getImg_url() {
+		return img_url;
+	}
+	public void setImg_url(String img_url) {
+		this.img_url = img_url;
+	}
 	private int numOfComments;
 	public int getNumOfComments() {
 		return numOfComments;
